@@ -1,0 +1,476 @@
+import {
+  LongevityPillar,
+  InterventionProtocol,
+  MarketBreakdown,
+  UnitEconomicMetric,
+} from "../types";
+
+export const LONGEVITY_PILLARS: LongevityPillar[] = [
+  {
+    id: "epigenetics",
+    title: "Epigenetic Methylome",
+    subtitle: "DNA Methylation & Biological Clocks",
+    hallmark: "Epigenetic Alterations & Transcriptional Drift",
+    description:
+      "Analyzes over 850,000 CpG methylation sites across chromatin. Using validated 3rd-generation algorithms (DunedinPACE, GrimAge v2, Horvath), ProAge quantifies the exact speed of biological aging vs chronological time.",
+    keyBiomarkers: [
+      {
+        name: "DunedinPACE",
+        code: "PACE-DNAm",
+        unit: "years/cal year",
+        optimalRange: "< 0.80",
+        clinicalBenchmark: "1.00 (Normative Population)",
+        agingImpact: "Measures instantaneous rate of multi-organ functional decline",
+        interventions: ["Caloric restriction mimetics", "Zone 2 training", "NAD+ repletion"],
+      },
+      {
+        name: "DNAm GrimAge v2",
+        code: "GRIM-AGE",
+        unit: "years",
+        optimalRange: "-4.5 to -8.0 yrs",
+        clinicalBenchmark: "± 0.0 yrs",
+        agingImpact: "Highest predictive power for all-cause mortality and morbidity",
+        interventions: ["Smoking cessation", "Plant polyphenol protocols", "SASP clearance"],
+      },
+      {
+        name: "Telomere Length T/S",
+        code: "TL-qPCR",
+        unit: "ratio",
+        optimalRange: "> 1.15",
+        clinicalBenchmark: "0.90 – 1.00",
+        agingImpact: "Reflects replicative cell history and genomic buffer capacity",
+        interventions: ["Aerobic interval conditioning", "Meditation/stress down-regulation"],
+      },
+    ],
+    reversalPotential: "-3.8 to -7.2 Years",
+    clinicalPriority: "Critical",
+    iconName: "Dna",
+    accentColor: "#10B981",
+  },
+  {
+    id: "senescence",
+    title: "Cellular Senescence",
+    subtitle: "SASP Clearance & Tissue Renewal",
+    hallmark: "Cellular Senescence & Telomere Exhaustion",
+    description:
+      "Senescent 'zombie' cells resist apoptosis and secrete the toxic Senescence-Associated Secretory Phenotype (SASP), driving sterile chronic systemic inflammation, vascular stiffness, and stem cell exhaustion.",
+    keyBiomarkers: [
+      {
+        name: "p16INK4a Expression",
+        code: "CDKN2A",
+        unit: "log2 fold",
+        optimalRange: "< 0.40",
+        clinicalBenchmark: "1.20 (Age 50+ avg)",
+        agingImpact: "Primary cell cycle arrest biomarker in T-lymphocytes",
+        interventions: ["Pulsed Fisetin protocols", "Dasatinib + Quercetin", "Curcumin mimetics"],
+      },
+      {
+        name: "High-Sensitivity CRP",
+        code: "hs-CRP",
+        unit: "mg/L",
+        optimalRange: "< 0.50",
+        clinicalBenchmark: "> 2.0 (High Cardiovascular Risk)",
+        agingImpact: "Systemic low-grade vascular and hepatic inflammatory driver",
+        interventions: ["Omega-3 index > 9%", "Atheroprotective nutrition", "Gut barrier repair"],
+      },
+      {
+        name: "Interleukin-6 (IL-6)",
+        code: "IL6-SASP",
+        unit: "pg/mL",
+        optimalRange: "< 1.2",
+        clinicalBenchmark: "2.8 – 4.5",
+        agingImpact: "Key cytokine propagating senescent secretome to neighboring tissue",
+        interventions: ["Thermal sauna hormesis", "Cryotherapy", "Spermidine autophagy"],
+      },
+    ],
+    reversalPotential: "-2.4 to -4.6 Years",
+    clinicalPriority: "Critical",
+    iconName: "ShieldAlert",
+    accentColor: "#F59E0B",
+  },
+  {
+    id: "mitochondria",
+    title: "Mitochondrial Bioenergetics",
+    subtitle: "NAD+ Pool & Cellular ATP Flux",
+    hallmark: "Mitochondrial Dysfunction & Energy Crisis",
+    description:
+      "Mitochondria generate 95% of cellular ATP. Aging depletes the intracellular NAD+ pool by up to 50% between age 20 and 50, impairing sirtuin longevity enzymes (SIRT1, SIRT3) and mitochondrial biogenesis via PGC-1α.",
+    keyBiomarkers: [
+      {
+        name: "Intracellular NAD+",
+        code: "NAD-WB",
+        unit: "μM",
+        optimalRange: "> 40.0",
+        clinicalBenchmark: "18.0 – 24.0 (Age 45+ avg)",
+        agingImpact: "Critical co-enzyme for DNA repair (PARPs) and sirtuins",
+        interventions: ["NMN / NR + TMG", "CD38 enzyme inhibitors (Apigenin)", "Exercise"],
+      },
+      {
+        name: "VO2 Max",
+        code: "VO2-PEAK",
+        unit: "mL/kg/min",
+        optimalRange: "> 48.0",
+        clinicalBenchmark: "32.0 – 36.0",
+        agingImpact: "Strongest non-invasive predictor of cardiorespiratory longevity",
+        interventions: ["Zone 2 steady-state base (80%)", "Zone 5 Norwegian 4x4 intervals (20%)"],
+      },
+      {
+        name: "Fasting Lactate",
+        code: "LAC-FAST",
+        unit: "mmol/L",
+        optimalRange: "< 0.9",
+        clinicalBenchmark: "1.4 – 2.0",
+        agingImpact: "Surrogate for mitochondrial pyruvate oxidation efficiency",
+        interventions: ["Mitochondrial cristae density training", "Alpha-lipoic acid", "CoQ10/PQQ"],
+      },
+    ],
+    reversalPotential: "-3.1 to -5.8 Years",
+    clinicalPriority: "Critical",
+    iconName: "Zap",
+    accentColor: "#059669",
+  },
+  {
+    id: "metabolic",
+    title: "Metabolic Homeostasis",
+    subtitle: "mTOR / AMPK Balance & Glycemic Index",
+    hallmark: "Deregulated Nutrient Sensing",
+    description:
+      "Hyperinsulinemia and chronic mTOR overactivation block cellular autophagy—the body's lysosomal waste disposal system. Calibrating insulin sensitivity preserves microvasculature and neurocognitive vitality.",
+    keyBiomarkers: [
+      {
+        name: "Fasting Insulin",
+        code: "INS-FAST",
+        unit: "μIU/mL",
+        optimalRange: "2.0 – 4.5",
+        clinicalBenchmark: "> 8.5 (Subclinical Resistance)",
+        agingImpact: "Drives vascular endothelial dysfunction, visceral fat, and cognitive decline",
+        interventions: ["Time-restricted eating", "Berberine / Metformin analogs", "Resistance training"],
+      },
+      {
+        name: "HbA1c",
+        code: "GLYC-HB",
+        unit: "%",
+        optimalRange: "4.8 – 5.2",
+        clinicalBenchmark: "> 5.7 (Prediabetes)",
+        agingImpact: "Measures 90-day protein glycation (AGEs) and tissue cross-linking",
+        interventions: ["Low glycemic index diet", "Soluble prebiotic fiber", "Post-meal walks"],
+      },
+      {
+        name: "HOMA-IR",
+        code: "HOMA-IR",
+        unit: "score",
+        optimalRange: "< 0.9",
+        clinicalBenchmark: "> 1.9 (Significant Resistance)",
+        agingImpact: "Integrated mathematical model of beta-cell function and hepatic sensitivity",
+        interventions: ["Insulin sensitizing protocols", "Cold water hormesis"],
+      },
+    ],
+    reversalPotential: "-2.8 to -5.0 Years",
+    clinicalPriority: "High",
+    iconName: "Activity",
+    accentColor: "#10B981",
+  },
+  {
+    id: "vascular",
+    title: "Vascular & Endothelial Health",
+    subtitle: "Arterial Stiffness & Microcirculation",
+    hallmark: "Extracellular Matrix Stiffening & Capillary Loss",
+    description:
+      "Arteries lose nitric oxide bioavailability and accumulate calcium and advanced glycation end-products. Pulse wave velocity directly measures vascular age, forecasting stroke, myocardial infarction, and vascular dementia.",
+    keyBiomarkers: [
+      {
+        name: "Pulse Wave Velocity",
+        code: "baPWV",
+        unit: "m/s",
+        optimalRange: "< 6.5",
+        clinicalBenchmark: "> 9.0 (Arterial Hardening)",
+        agingImpact: "Gold standard measure of central aortic and systemic stiffness",
+        interventions: ["Nitric oxide precursors (L-Citrulline)", "Sauna vasodilation", "Vitamin K2 MK-7"],
+      },
+      {
+        name: "Apolipoprotein B (ApoB)",
+        code: "APO-B",
+        unit: "mg/dL",
+        optimalRange: "< 65.0",
+        clinicalBenchmark: "> 95.0",
+        agingImpact: "Direct count of atherogenic particles penetrating endothelial intima",
+        interventions: ["Targeted lipid lowering", "Plant sterols", "Soluble fiber 40g/day"],
+      },
+      {
+        name: "Endothelial Nitric Oxide (NO)",
+        code: "NO-SERUM",
+        unit: "μmol/L",
+        optimalRange: "> 45.0",
+        clinicalBenchmark: "< 25.0",
+        agingImpact: "Essential vasodilator maintaining cerebral perfusion and capillary density",
+        interventions: ["Dietary nitrates (beetroot extract)", "UV light exposure", "Aerobic baseline"],
+      },
+    ],
+    reversalPotential: "-3.5 to -6.2 Years",
+    clinicalPriority: "High",
+    iconName: "HeartPulse",
+    accentColor: "#EC4899",
+  },
+  {
+    id: "immune",
+    title: "Immune Repertoire",
+    subtitle: "Thymic Rejuvenation & Lymphocyte Reserve",
+    hallmark: "Stem Cell Exhaustion & Immunosenescence",
+    description:
+      "Thymic involution replaces active T-cell production with fat, leaving the aging immune system dominated by clonal memory cells unable to fight novel pathogens or clear emerging neoplastic cells.",
+    keyBiomarkers: [
+      {
+        name: "CD4+ / CD8+ Ratio",
+        code: "IMM-RATIO",
+        unit: "ratio",
+        optimalRange: "1.8 – 2.4",
+        clinicalBenchmark: "< 1.0 (Immune Risk Phenotype)",
+        agingImpact: "Predicts vulnerability to severe infections and reduced vaccine efficacy",
+        interventions: ["Zinc + Quercetin ionophore", "Thymic peptides (Thymosin alpha-1)", "Sleep hygiene"],
+      },
+      {
+        name: "Naive T-Cell Diversity",
+        code: "TREC-qPCR",
+        unit: "copies/μg",
+        optimalRange: "> 500",
+        clinicalBenchmark: "< 120 (Advanced Involution)",
+        agingImpact: "Reflects ongoing de novo production of pathogen-naive defenders",
+        interventions: ["Growth hormone / Metformin / DHEA protocol (TRIIM trial)", "Deep sleep"],
+      },
+      {
+        name: "Cytomegalovirus (CMV) Titer",
+        code: "CMV-IGG",
+        unit: "IU/mL",
+        optimalRange: "Negative / Low",
+        clinicalBenchmark: "High (Clonal Inflation)",
+        agingImpact: "Chronic viral latency consuming up to 30% of lifetime immune capacity",
+        interventions: ["Targeted antiviral immunity", "Glutathione status support"],
+      },
+    ],
+    reversalPotential: "-2.0 to -4.2 Years",
+    clinicalPriority: "Moderate",
+    iconName: "ShieldCheck",
+    accentColor: "#6366F1",
+  },
+];
+
+export const INTERVENTION_PROTOCOLS: InterventionProtocol[] = [
+  {
+    id: "proto-nmn-nad",
+    title: "Dual NAD+ Replenishment Protocol (NMN + TMG)",
+    category: "molecular",
+    evidenceTier: "Tier 1: Human RCT",
+    targetBiomarkers: ["Intracellular NAD+", "DunedinPACE", "Mitochondrial ATP"],
+    mechanism:
+      "Direct enzymatic precursor to NAD+ via NMNAT. Combined with Trimethylglycine (TMG) as a methyl donor buffer to prevent hepatic methyl-pool depletion during nicotinamide clearance.",
+    dosageSchedule: "850 mg NMN sublingual AM + 500 mg TMG daily with breakfast",
+    ageReversalImpact: "-1.8 to -2.9 biological years across 12-month cohort",
+    humanTrialsCount: 14,
+    clinicalSummary:
+      "Randomized double-blind placebo-controlled trials show a 62% elevation in peripheral blood mononuclear NAD+ levels within 60 days, accompanied by significant improvements in 6-minute walk distance and insulin sensitivity.",
+    featured: true,
+  },
+  {
+    id: "proto-fisetin-senolytic",
+    title: "Mayo Clinic Pulsed Senolytic Regimen (Fisetin)",
+    category: "molecular",
+    evidenceTier: "Tier 1: Human RCT",
+    targetBiomarkers: ["p16INK4a", "hs-CRP", "IL-6 SASP"],
+    mechanism:
+      "Selectively induces apoptosis in non-cycling senescent cells by inhibiting Bcl-2 family anti-apoptotic proteins without disrupting healthy proliferating progenitor cells.",
+    dosageSchedule: "20 mg/kg body weight for 2 consecutive days, repeated monthly for 3 cycles",
+    ageReversalImpact: "-2.1 to -3.4 biological years in high-SASP cohorts",
+    humanTrialsCount: 9,
+    clinicalSummary:
+      "Currently under Phase II clinical trials (AFFIRM-LATOR). Pulsed administration clears 30-45% of systemic senescent burden while dramatically dropping circulating inflammatory cytokines.",
+    featured: true,
+  },
+  {
+    id: "proto-zone2-biogenesis",
+    title: "Zone 2 Mitochondrial Biogenesis Protocol",
+    category: "hormetic",
+    evidenceTier: "Tier 1: Human RCT",
+    targetBiomarkers: ["VO2 Max", "Fasting Lactate", "Capillary Density"],
+    mechanism:
+      "Sustained aerobic exertion at 1.5–2.0 mmol/L blood lactate optimizes fatty acid oxidation and stimulates PGC-1α-mediated mitochondrial fission, fusion, and cristae surface area expansion.",
+    dosageSchedule: "150–200 minutes/week divided into 45-min sessions (Heart Rate Zone 2)",
+    ageReversalImpact: "-3.2 to -4.8 biological years in all-cause mortality hazard ratios",
+    humanTrialsCount: 38,
+    clinicalSummary:
+      "Demonstrated 18% improvement in peak mitochondrial oxygen consumption and 2.4-fold increase in skeletal muscle capillary-to-fiber ratio over a 6-month tracking period.",
+    featured: true,
+  },
+  {
+    id: "proto-sauna-hsp",
+    title: "Finnish Thermal Hormesis & Heat Shock Protein 70",
+    category: "hormetic",
+    evidenceTier: "Tier 2: Clinical Cohort",
+    targetBiomarkers: ["Pulse Wave Velocity", "Endothelial NO", "Cardiovascular Mortality"],
+    mechanism:
+      "Whole-body hyperthermia (80°C–90°C) triggers heat shock factor-1 (HSF-1), inducing HSP70 and HSP90 chaperone proteins that repair misfolded proteins and eliminate cytotoxic aggregates.",
+    dosageSchedule: "20 minutes at 85°C, 4 to 7 sessions per week followed by cool down",
+    ageReversalImpact: "Associated with 50% lower fatal cardiovascular disease in 20-yr follow-up",
+    humanTrialsCount: 22,
+    clinicalSummary:
+      "Kuopio Ischemic Heart Disease Risk Factor Study (2,315 participants) proved a dose-response relationship: 4-7 sauna sessions/week reduced dementia risk by 66% and cardiovascular mortality by 50%.",
+  },
+  {
+    id: "proto-autophagy-tre",
+    title: "Circadian Time-Restricted Feeding & AMPK Autophagy",
+    category: "metabolic",
+    evidenceTier: "Tier 1: Human RCT",
+    targetBiomarkers: ["Fasting Insulin", "HOMA-IR", "mTOR Phosphorylation"],
+    mechanism:
+      "An 8-hour feeding window with a 16-hour fasting phase down-regulates insulin/IGF-1 signaling, lowering mTORC1 while activating AMPK, triggering macro-autophagy and lipid droplet turnover.",
+    dosageSchedule: "16:8 daily intermittent feeding window (10:00 AM – 6:00 PM)",
+    ageReversalImpact: "-1.5 to -2.7 biological years in metabolic age",
+    humanTrialsCount: 27,
+    clinicalSummary:
+      "Restricting intake to an 8-hour window without calorie restriction lowered systolic blood pressure by 7 mmHg, decreased fasting insulin by 28%, and triggered measurable markers of cellular autophagy.",
+  },
+  {
+    id: "proto-sleep-neuro",
+    title: "Deep Stage Delta Wave & Glymphatic Optimization",
+    category: "sleep-neuro",
+    evidenceTier: "Tier 1: Human RCT",
+    targetBiomarkers: ["Beta-Amyloid Clearance", "Deep Sleep %", "Cortisol AUC"],
+    mechanism:
+      "Slow-wave (N3) sleep expands interstitial space by 60%, driving cerebrospinal fluid flow through the glymphatic system to wash away toxic metabolic waste and beta-amyloid tau proteins.",
+    dosageSchedule: "Temperature drop to 18°C + 400 mg Magnesium L-Threonate + 50 mg Apigenin 60 min pre-bed",
+    ageReversalImpact: "Prevents accelerated cognitive biological aging by up to 4.2 years",
+    humanTrialsCount: 19,
+    clinicalSummary:
+      "Polysomnography validation shows a 24% increase in stage N3 slow-wave sleep duration and a 35% reduction in nocturnal sympathetic tone as measured by heart rate variability (HRV).",
+  },
+];
+
+export const MARKET_DATA: MarketBreakdown[] = [
+  {
+    tier: "TAM",
+    title: "Total Addressable Market",
+    figure: "$640 Billion",
+    cagr: "+18.4% CAGR",
+    description:
+      "Global Longevity, Preventive Biotechnology, Precision Epigenetics, and Healthy Lifespan Extension sector by 2030 (McKinsey, Citi Global Insights).",
+    keyDrivers: [
+      "Demographic shift: 1.6 billion people over 65 by 2050",
+      "Transition from reactive sick-care to proactive predictive medicine",
+      "Billionaire & institutional venture capital inflows into cellular reprogramming",
+    ],
+  },
+  {
+    tier: "SAM",
+    title: "Serviceable Addressable Market",
+    figure: "$94 Billion",
+    cagr: "+24.2% CAGR",
+    description:
+      "Direct-to-consumer and clinic-intermediated multi-omic biomarker testing, epigenetic clocks, and clinical healthspan subscription platforms.",
+    keyDrivers: [
+      "High net worth individuals & corporate executive wellness programs",
+      "Integration of at-home micro-blood collection with next-gen NGS sequencing",
+      "Consumer demand for quantifiable biological age reversal outcomes",
+    ],
+  },
+  {
+    tier: "SOM",
+    title: "Serviceable Obtainable Market (ProAge)",
+    figure: "$12.8 Billion",
+    cagr: "+36.5% CAGR",
+    description:
+      "Target capture across North America, Europe, UAE/GCC, and Asia-Pacific via B2B clinic networks (concierge medical spas, longevity centers) and B2C SaaS subscribers.",
+    keyDrivers: [
+      "Proprietary 850k+ CpG Epigenetic Chip partnership",
+      "Recurring 6-month re-testing cycle generating predictive revenue cohorts",
+      "Zero-integration SaaS onboarding for private longevity practices",
+    ],
+  },
+];
+
+export const UNIT_ECONOMICS: UnitEconomicMetric[] = [
+  {
+    label: "Epigenetic Kit Gross Margin",
+    value: "75.4%",
+    subtext: "Retail $399 | Fully burdened COGS $98 including CLIA lab processing",
+    trend: "+6.2% YoY with volume automation",
+  },
+  {
+    label: "Subscriber Annual LTV",
+    value: "$4,280",
+    subtext: "Bi-annual test kits ($798) + $149/mo algorithmic intelligence tier",
+    trend: "6.8x LTV / CAC ratio",
+  },
+  {
+    label: "Blended Customer Acquisition (CAC)",
+    value: "$630",
+    subtext: "Direct digital performance marketing + medical professional referral bounty",
+    trend: "Payback in 3.4 months",
+  },
+  {
+    label: "Net Revenue Retention (NRR)",
+    value: "128%",
+    subtext: "Driven by biomarker re-test cadence, companion supplements, and tier upgrades",
+    trend: "Top decile biotech SaaS",
+  },
+];
+
+export const SERIES_A_TERMS = {
+  roundSize: "$24,000,000",
+  securityType: "Series A Preferred Stock",
+  preMoneyValuation: "$71,000,000",
+  postMoneyValuation: "$95,000,000",
+  leadInvestorAllocated: "$14,000,000",
+  availableSyndicateAllocation: "$10,000,000",
+  boardComposition: "2 Founders, 1 Lead Investor, 1 Independent Biotech Scientist",
+  informationRights: "Monthly operational metrics, quarterly audited financials, real-time clinical trial dashboard",
+  useOfProceeds: [
+    { title: "Clinical Trials & Longitudinal Validation", share: 38, amount: "$9.12M", color: "#10B981" },
+    { title: "Proprietary CLIA-Certified Sequencing Hub", share: 26, amount: "$6.24M", color: "#059669" },
+    { title: "Global Longevity Clinic B2B Enterprise Rollout", share: 22, amount: "$5.28M", color: "#F59E0B" },
+    { title: "Regulatory Affairs & FDA SaMD Clearance", share: 14, amount: "$3.36M", color: "#6366F1" },
+  ],
+};
+
+export const PRESET_SIMULATION_PROFILES = [
+  {
+    id: "super-ager",
+    name: "Elite Super-Ager",
+    description: "Daily Zone 2 training, optimal plant polyphenol intake, circadian consistency",
+    values: {
+      chronologicalAge: 52,
+      grimAgeIndex: 0.78,
+      hsCrp: 0.3,
+      fastingInsulin: 2.8,
+      vo2Max: 54,
+      deepSleepPercent: 24,
+      telomereRatio: 1.28,
+    },
+  },
+  {
+    id: "executive-burnout",
+    name: "Executive Stress Profile",
+    description: "High cortisol, chronic sleep debt, sedentarism, subclinical inflammation",
+    values: {
+      chronologicalAge: 44,
+      grimAgeIndex: 1.22,
+      hsCrp: 2.4,
+      fastingInsulin: 11.2,
+      vo2Max: 29,
+      deepSleepPercent: 11,
+      telomereRatio: 0.82,
+    },
+  },
+  {
+    id: "biohacker",
+    name: "Optimized Biohacker",
+    description: "Active NAD+ supplementation, pulsed senolytics, sauna & cold therapy",
+    values: {
+      chronologicalAge: 39,
+      grimAgeIndex: 0.84,
+      hsCrp: 0.4,
+      fastingInsulin: 3.5,
+      vo2Max: 49,
+      deepSleepPercent: 21,
+      telomereRatio: 1.15,
+    },
+  },
+];
