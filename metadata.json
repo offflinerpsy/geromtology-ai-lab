@@ -1,6 +1,6 @@
 {
-  "name": "ProAge Atlas — Longevity & Epigenetic Intelligence Platform",
-  "description": "Next-generation longevity biotechnology platform featuring epigenetic biological age diagnostics, cellular systems biomarker mapping, evidence-based clinical protocols, and an integrated Gemini AI Longevity Copilot.",
-  "requestFramePermissions": ["microphone"],
+  "name": "ProAge Atlas — Auditable AI for Healthy-Aging Research",
+  "description": "Research-stage software for traceable evidence, reproducible methods and independently evaluated AI workflows in healthy-aging research.",
+  "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
