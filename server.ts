@@ -7,122 +7,105 @@ import { GoogleGenAI } from "@google/genai";
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT || 3000);
 
-app.use(express.json());
+app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-// Lazy GoogleGenAI client
 let aiClient: GoogleGenAI | null = null;
 function getGenAI(): GoogleGenAI | null {
-  if (!process.env.GEMINI_API_KEY) {
-    return null;
-  }
+  if (!process.env.GEMINI_API_KEY) return null;
   if (!aiClient) {
     aiClient = new GoogleGenAI({
       apiKey: process.env.GEMINI_API_KEY,
-      httpOptions: {
-        headers: {
-          "User-Agent": "aistudio-build",
-        },
-      },
+      httpOptions: { headers: { "User-Agent": "proage-atlas-research" } },
     });
   }
   return aiClient;
 }
 
-const SYSTEM_INSTRUCTION = `You are ProAge Atlas AI — the Longevity & Epigenetic Biomarker Intelligence Copilot.
-You specialize in:
-1. Epigenetic clocks (DunedinPACE, Horvath clock, PhenoAge, GrimAge DNA methylation).
-2. Hallmarks of Aging (cellular senescence, mitochondrial bioenergetics, telomere attrition, genomic instability, proteostasis).
-3. Evidence-based interventions (NAD+ precursors like NMN/NR, Senolytics like Fisetin, Metformin/SGLT2i research, Rapamycin mTOR inhibition, Heat/Cold hormesis, VO2 Max optimization, deep sleep architectures).
-4. ProAge Atlas platform technology, multi-omics biomarker kits, and investment thesis ($640B Longevity TAM, B2B2C business model, clinical grade accuracy).
+const SYSTEM_INSTRUCTION = `You are the ProAge Atlas research assistant for an early-stage healthy-aging research software prototype.
 
-Provide rigorous, scientific yet clear and inspiring answers. If the user asks in Russian, reply in Russian. If in English, reply in English. Format with clean bullet points and bold key biomarkers.`;
+Your job is to help with literature organization, method comparison, structured evidence extraction and research-workflow questions. Keep claims source-grounded and distinguish published findings from hypotheses, synthetic examples and unreviewed development fixtures.
 
-// API Health Check
-app.get("/api/health", (req, res) => {
+Important boundaries:
+- Do not present ProAge Atlas as clinically validated, diagnostic, treatment-providing, or proven to extend lifespan or healthspan.
+- Do not invent funding, valuation, certifications, patient cohorts, partnerships, clinical outcomes or model performance.
+- Do not give personalized medical treatment or supplement dosing advice. For medical decisions, recommend consulting a qualified clinician.
+- When evidence is uncertain or source context is missing, say so clearly.
+- Prefer concise, auditable answers that identify what should be checked in the primary source.`;
+
+app.get("/api/health", (_req, res) => {
   res.json({
     status: "ok",
+    product: "ProAge Atlas",
+    stage: "research-prototype",
     hasApiKey: Boolean(process.env.GEMINI_API_KEY),
-    model: "gemini-3.8-flash",
     timestamp: new Date().toISOString(),
   });
 });
 
-// Gemini Longevity Copilot Chat API
 app.post("/api/chat", async (req, res) => {
   try {
-    const { message, history = [] } = req.body;
+    const { message, history = [] } = req.body ?? {};
     if (!message || typeof message !== "string") {
       return res.status(400).json({ error: "Message string is required" });
     }
 
     const ai = getGenAI();
-
     if (!ai) {
-      // Intelligent fallback if no API key is set yet
-      const isRussian = /[а-яё]/i.test(message);
-      let reply = "";
-      if (isRussian) {
-        reply = `**[ProAge Clinical Intelligence]**\n\nАнализ запроса: *"${message}"*\n\n1. **Эпигенетический статус:** Регулярный мониторинг ДНК-метилирования (часы GrimAge и алгоритм DunedinPACE) позволяет зафиксировать замедление биологического темпа старения до **0.78–0.82 года** за календарный год.\n\n2. **Рекомендуемые интервенции:**\n• **Митохондриальный каскад:** Бустинг пула NAD+ (500–1000 мг NMN/NR сублингвально в утренний циркадный пик).\n• **Очистка сенесцентных клеток:** Флавоноидные сенолитики (Физетин 20 мг/кг курсами по протоколу Mayo Clinic).\n• **Метаболическая гибкость:** Зона 2 кардио (3-4 часа в неделю) для роста плотности крист митохондрий.\n\n*Для детального персонализированного протокола подключите ключ Gemini API в панели Settings.*`;
-      } else {
-        reply = `**[ProAge Clinical Intelligence]**\n\nQuery analysis: *"${message}"*\n\n1. **Epigenetic Biomarker Vector:** Measuring 850k+ CpG methylation sites via DunedinPACE tracks aging pace down to **0.76–0.80 years** per calendar year.\n\n2. **Evidence-Based Protocol Recommendations:**\n• **Mitochondrial Homeostasis:** Intracellular NAD+ elevation via NMN/NR (600–1000 mg/day).\n• **Senescent Cell Clearance:** Intermittent high-dose Fisetin senolytic pulse protocol.\n• **Vascular Elasticity:** Endothelial nitric oxide synthase activation via Zone 2 aerobic base.\n\n*Configure your Gemini API key in Settings > Secrets for real-time live synthesis.*`;
-      }
-      return res.json({ reply, source: "proage-knowledge-base" });
-    }
-
-    // Build chat contents from history + current message
-    const formattedContents = [];
-    for (const item of history.slice(-6)) {
-      formattedContents.push({
-        role: item.role === "user" ? "user" : "model",
-        parts: [{ text: item.content || item.text || "" }],
+      return res.json({
+        reply:
+          "The research assistant is not connected to a model in this deployment. The public prototype remains available as a source-linked, synthetic-data demonstration.",
+        source: "prototype-fallback",
       });
     }
-    formattedContents.push({
-      role: "user",
-      parts: [{ text: message }],
-    });
+
+    const formattedContents = [];
+    for (const item of Array.isArray(history) ? history.slice(-6) : []) {
+      formattedContents.push({
+        role: item?.role === "user" ? "user" : "model",
+        parts: [{ text: String(item?.content || item?.text || "") }],
+      });
+    }
+    formattedContents.push({ role: "user", parts: [{ text: message }] });
 
     const response = await ai.models.generateContent({
       model: "gemini-3.8-flash",
       contents: formattedContents,
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,
-        temperature: 0.7,
+        temperature: 0.25,
       },
     });
 
-    const reply = response.text || "No response generated";
-    res.json({ reply, source: "gemini-3.8-flash" });
+    res.json({
+      reply: response.text || "No response generated.",
+      source: "gemini-3.8-flash",
+    });
   } catch (error: any) {
-    console.error("Gemini API Error:", error);
+    console.error("Research assistant API error:", error);
     res.status(500).json({
-      error: "Failed to generate AI response",
+      error: "Failed to generate a research response",
       details: error?.message || "Unknown error",
     });
   }
 });
 
-// Vite middleware & Static serving
 async function startServer() {
   if (process.env.NODE_ENV !== "production") {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
-    });
+    const vite = await createViteServer({ server: { middlewareMode: true }, appType: "spa" });
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), "dist");
     app.use(express.static(distPath));
-    app.get("*", (req, res) => {
+    app.get("*", (_req, res) => {
       res.sendFile(path.join(distPath, "index.html"));
     });
   }
 
   app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://0.0.0.0:${PORT}`);
+    console.log(`ProAge Atlas server running on port ${PORT}`);
   });
 }
 
