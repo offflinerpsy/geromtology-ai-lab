@@ -2,6 +2,7 @@ import React from 'react';
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import { App } from './App';
 import './index.css';
+import './accessibility.css';
 
 const root = document.getElementById('root');
 if (!root) throw new Error('The application root is missing.');

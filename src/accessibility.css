@@ -1,0 +1,30 @@
+/* Contrast and interaction refinements verified against the rendered site. */
+.attribution,
+.invitation-meta p:not(.eyebrow),
+.project-copy .eyebrow,
+.contact-options .eyebrow,
+.contact-note,
+.copy-button,
+.development-list small { color: #526248; }
+.reference-category { color: #526c40; }
+.reference-publication { color: #56644c; }
+.search-field input::placeholder { color: #58694e; }
+.search-field input { font-size: 16px; }
+.filter-row button { min-height: 44px; }
+.desktop-nav > a, .nav-disclosure > button { font-size: 13px; }
+.skip-link:not(:focus) { clip-path: inset(50%); }
+html:has(.site-shell[data-motion='paused']) { scroll-behavior: auto; }
+.hero-art, .lab-hero-art {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 16%, #000);
+  mask-image: linear-gradient(90deg, transparent, #000 16%, #000);
+}
+@media (max-width: 760px) {
+  .hero-bottom-copy p,
+  .person-meta > p,
+  .lab-principles p,
+  .founder-panel p:not(.eyebrow),
+  .contact-options article > p:not(.eyebrow),
+  .evidence-record > div:last-child > p { font-size: 13px; }
+  .search-field input { font-size: 16px; }
+  .hero-caption > span { font-size: 9px; }
+}

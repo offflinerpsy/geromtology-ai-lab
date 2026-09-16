@@ -154,7 +154,7 @@ function Methods() {
 function Contact() {
   const [copied, setCopied] = useState('');
   const [notice, setNotice] = useState('');
-  const timer = useRef<ReturnType<typeof setTimeout>>();
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
   async function copy(email: string) {
     try { await navigator.clipboard.writeText(email); setCopied(email); setNotice('Email address copied.'); if (timer.current) clearTimeout(timer.current); timer.current = setTimeout(() => setCopied(''), 2500); }
@@ -188,7 +188,8 @@ export function App({ initialPath = '/' }: { initialPath?: string }) {
       previousPath.current = path;
       const frame = requestAnimationFrame(() => {
         document.getElementById('main')?.focus({ preventScroll: true });
-        const id = decodeURIComponent(window.location.hash.slice(1));
+        let id = window.location.hash.slice(1);
+        try { id = decodeURIComponent(id); } catch { /* Keep malformed fragments inert. */ }
         const target = id ? document.getElementById(id) : null;
         if (target) target.scrollIntoView({ behavior: 'instant' }); else window.scrollTo({ top: 0, behavior: 'instant' });
       });
