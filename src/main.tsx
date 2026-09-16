@@ -1,10 +1,10 @@
-import {StrictMode} from 'react';
-import {createRoot} from 'react-dom/client';
-import App from './App.tsx';
+import React from 'react';
+import { createRoot, hydrateRoot } from 'react-dom/client';
+import { App } from './App';
 import './index.css';
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+const root = document.getElementById('root');
+if (!root) throw new Error('The application root is missing.');
+const application = <React.StrictMode><App initialPath={window.location.pathname} /></React.StrictMode>;
+if (root.querySelector('.site-shell')) hydrateRoot(root, application);
+else createRoot(root).render(application);
