@@ -1,23 +1,47 @@
+![ProAge Atlas — research for healthy aging](https://proage-atlas.offflinerpsy.workers.dev/images/proage-atlas-share.png)
+
 # ProAge Atlas
 
-An English-language, image-led research website with a local evidence-reading room. Built with React, TypeScript and Vite, with build-time HTML rendering for every public route.
+**Scientific evidence, aging measurements and study planning — in one research workspace.**
 
-## Development
+ProAge Atlas is an independent research software initiative for small geroscience and longevity research teams. It brings a curated reference library, measurement-method context, two reproducible calculators and source-linked AI synthesis into a single workspace.
 
-Install dependencies with npm install. Run npm run dev for local development, npm run lint for the TypeScript check and npm run build for optimized media, the browser application, page HTML and sitemap. npm run preview serves the built site locally.
+[Explore the live platform](https://proage-atlas.offflinerpsy.workers.dev) · [Production source](https://github.com/offflinerpsy/geromtology-ai-lab/tree/cloudflare/production) · [Product direction](https://proage-atlas.offflinerpsy.workers.dev/about) · [Investors](https://proage-atlas.offflinerpsy.workers.dev/investors) · [Roadmap](https://proage-atlas.offflinerpsy.workers.dev/roadmap)
 
-## Public pages
+## Production
 
-Home, Institute & People, Research, Longevity Medicine, Geriatric Medicine, Biomarkers & Measurement, AI Laboratory, Projects & Initiatives, Methods & Trust, and Contact.
+The current application is hosted on **Cloudflare Workers** and maintained on **`cloudflare/production`**. That branch contains the complete source, product documentation, tests and deployment configuration.
 
-The evidence explorer supports local search, topic filters, expandable source limitations and Markdown export. Contact links open an email application; there is no simulated form submission. No live AI inference, clinical assessment or patient-data intake is represented.
+```sh
+git clone --branch cloudflare/production https://github.com/offflinerpsy/geromtology-ai-lab.git
+cd geromtology-ai-lab
+corepack enable
+pnpm install --frozen-lockfile
+pnpm dev
+```
 
-## Media
+Node.js 22.19 or later and the pinned pnpm version are required. Cloudflare Workers Builds validates and publishes the production branch. The application has no dependency on the ChatGPT Sites runtime.
 
-The three conceptual illustrations used in the design come from the repository’s existing original images. scripts/prepare-media.mjs creates responsive WebP versions at build time; the cellular crop removes embedded decorative labels. OIAA portraits and public-document covers retain their original attribution. Institutional images and titles are not a claim of endorsement.
+## Research instruments
 
-## Deployment
+| Instrument | Role |
+| --- | --- |
+| Evidence library | Search and filter a selected reference collection with explicit limitations |
+| PhenoAge Explorer | Inspect the published clinical biomarker model, units and reproducible calculations |
+| Study Planner | Explore two-group sample size, noncentral-t power, allocation and dropout |
+| Evidence Copilot | Compare prepared source notes using server-side Azure AI and source-linked answers |
+| Enquiries | Receive research, pilot and investment enquiries in a private Cloudflare D1 inbox |
 
-The existing GitHub main branch deploys automatically to geromtology-ai-lab.vercel.app through Vercel. cleanUrls resolves the prerendered .html documents. There is no universal SPA rewrite: unknown paths should retain a real 404 response.
+This is a working research prototype. It does not provide diagnosis or treatment advice, and it does not claim clinical validation, completed commercial pilots, customers or funding. The evidence collection is curated; the assistant works from prepared notes rather than live literature search or full-text retrieval.
 
-Owner design constraints and verification requirements are recorded in AGENTS.md.
+## Documentation
+
+- [Architecture and development](https://github.com/offflinerpsy/geromtology-ai-lab/blob/cloudflare/production/README.md)
+- [Deployment, authentication, secrets and rollback](https://github.com/offflinerpsy/geromtology-ai-lab/blob/cloudflare/production/docs/DEPLOYMENT.md)
+- [Release verification](https://github.com/offflinerpsy/geromtology-ai-lab/blob/cloudflare/production/docs/RELEASE-2026-10-11.md)
+- [Contribution guide](https://github.com/offflinerpsy/geromtology-ai-lab/blob/cloudflare/production/CONTRIBUTING.md)
+- [Ownership and third-party material](https://github.com/offflinerpsy/geromtology-ai-lab/blob/cloudflare/production/RIGHTS.md)
+
+The earlier implementation remains on `main` to preserve its legacy Vercel integration and history. Start new product work from `cloudflare/production`. The backup branch `backup/before-cloudflare-migration-20261011` preserves the pre-migration revision.
+
+Maintained by Alex Yarosh. Public visibility does not grant an open-source license.
