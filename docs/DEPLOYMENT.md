@@ -6,7 +6,9 @@
 | --- | --- |
 | Source | `offflinerpsy/geromtology-ai-lab`, branch `cloudflare/production` |
 | Host | Cloudflare Workers, `proage-atlas` |
-| URL | https://proage-atlas.offflinerpsy.workers.dev |
+| Primary URL | https://gerontology.app |
+| Fallback URL | https://proage-atlas.offflinerpsy.workers.dev |
+| Email | Cloudflare Email Routing and Email Sending |
 | Database | Cloudflare D1, `proage-atlas`, binding `DB` |
 | Authentication | Cloudflare Access, verified-email research login and a separate owner-only inbox policy |
 | AI provider | Existing Azure Responses endpoint and deployment, server-only secret |
@@ -44,4 +46,19 @@ Legacy backup: `backup/before-cloudflare-migration-20261011` at `000dce2050389f8
 
 ## Release checks and limits
 
-Run typecheck, numerical/security tests and build. After deployment check route status, canonicals, sitemap/robots, contact persistence, anonymous AI denial and Access protection. Browser interactions, responsive layouts, signed-in AI answers and FPS need actual browser QA; HTTP responses are not click tests. The supported managed browser was unavailable during migration. Automatic email notifications remain unconfigured; enquiries are stored in the private inbox.
+Run typecheck, numerical/security tests and build. After deployment check route status, canonicals, sitemap/robots, contact persistence, anonymous AI denial and Access protection. Browser interactions, responsive layouts, signed-in AI answers and FPS need actual browser QA; HTTP responses are not click tests. The supported managed browser was unavailable during migration. Enquiries are stored in the private inbox first, then the Worker sends an owner notification. Email delivery failure is logged with the enquiry reference and does not discard the saved enquiry or invite duplicate submissions.
+
+## Domain and email
+
+`gerontology.app` and `www.gerontology.app` are custom domains of `proage-atlas`. Both are declared in `wrangler.jsonc` so future Git deployments retain them. A zone-level redirect sends www and HTTP requests to `https://gerontology.app`, retaining the path and query string. SEO canonicals, sitemap and social URLs use the primary origin.
+
+Existing Access applications protect `/auth/login` and `/manage/*` on the custom domains and the fallback hostname. Their audiences and owner-only inbox policy are unchanged.
+
+- Public correspondence: **hello@gerontology.app**; **contact@gerontology.app** is an alias. Both forward to the owner's verified Gmail destination. These are routing addresses, not separate IMAP mailboxes.
+- Application sender: **notifications@gerontology.app**. The `EMAIL` binding permits this sender and the verified owner destination only. Contact messages set Reply-To to the visitor's validated email; the application does not send to arbitrary visitors.
+- Cloudflare manages routing MX/SPF and sending return-path MX/SPF/DKIM. DMARC is configured with `p=reject`.
+- Notification content includes enquiry details and the private inbox link. The privacy notice describes this transfer. There are no marketing messages or automatic replies.
+
+Regenerate binding declarations after configuration changes with `npx wrangler types worker-bindings.d.ts --env-interface CloudflareBindings --include-runtime false`.
+
+Rollback source before domain/email: `854236b319cd8ab58ba485a0d8190628af9ca970`. A code rollback preserves D1 enquiry records. Cloudflare DNS, Access and routing rules are independent of code; review them separately before removing a domain or email feature.

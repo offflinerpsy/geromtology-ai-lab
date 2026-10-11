@@ -1,5 +1,6 @@
 import { env } from 'cloudflare:workers';
 import { readContactBody, validateEnquiry, validContactOrigin } from '@/lib/contact';
+import { notifyEnquiry } from '@/lib/enquiry-email';
 export const dynamic = 'force-dynamic';
 const headers = { 'Cache-Control': 'no-store' };
 export async function POST(request: Request) {
@@ -19,6 +20,7 @@ export async function POST(request: Request) {
     if (!quota) return Response.json({ error: 'Too many enquiries. Please try again in an hour.' }, { status: 429, headers: { ...headers, 'Retry-After': '3600' } });
     const id = crypto.randomUUID();
     await db.prepare('INSERT INTO contact_enquiries (id, name, organization, email, message, type, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)').bind(id, data.name, data.organization, data.email, data.message, data.type, now).run();
+    await notifyEnquiry(env.EMAIL, env.CONTACT_INBOX_OWNER_EMAIL, data, id);
     return Response.json({ reference: id, message: 'Your enquiry has been saved for review. Keep this reference for your records.' }, { status: 201, headers });
   } catch { return Response.json({ error: 'Your enquiry could not be saved. Please try again later.' }, { status: 503, headers }); }
 }

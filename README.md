@@ -6,7 +6,7 @@
 
 ProAge Atlas is an independent research software initiative for small geroscience and longevity research teams. This repository contains the public website and working prototype: a curated reference library, measurement-method context, two reproducible calculators and an AI assistant grounded in selected source notes.
 
-[Explore the platform](https://proage-atlas.offflinerpsy.workers.dev) · [Product direction](https://proage-atlas.offflinerpsy.workers.dev/about) · [Investors](https://proage-atlas.offflinerpsy.workers.dev/investors) · [Roadmap](https://proage-atlas.offflinerpsy.workers.dev/roadmap)
+[Explore the platform](https://gerontology.app) · [Product direction](https://gerontology.app/about) · [Investors](https://gerontology.app/investors) · [Roadmap](https://gerontology.app/roadmap)
 
 ## What works today
 
@@ -16,7 +16,7 @@ ProAge Atlas is an independent research software initiative for small geroscienc
 | PhenoAge Explorer | Calculate the published clinical biomarker model; inspect terms and export units/version | Clinical PhenoAge, not a DNA-methylation assay or a pace-of-aging estimate |
 | Study Planner | Explore two-group sample size, noncentral-t power, allocation and dropout | Independent observations, normally distributed outcomes and pooled variance |
 | Evidence Copilot | Compare selected prepared source notes with source-linked answers | Notes rather than full-text retrieval; email-verified access, server-side Azure connection |
-| Enquiries | Submit research, pilot and investment enquiries | Stored in a private D1 inbox; automatic email forwarding is not configured |
+| Enquiries | Submit research, pilot and investment enquiries | Stored in a private D1 inbox; owner notifications through Cloudflare Email Service |
 
 The site clearly separates ProAge Atlas product development from the Open Institute of Age and Aging's scientific and educational context. It does not claim clinical validation, customers, funding or completed commercial pilots. Saved research packages and team collaboration are on the roadmap.
 

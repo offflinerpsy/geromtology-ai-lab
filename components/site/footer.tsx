@@ -15,7 +15,7 @@ export default function Footer() {
       </div>
       <div className="footer-navigation">
         {columns.map(column => <nav aria-label={`Footer ${column.title}`} key={column.title}><h2>{column.title}</h2>{column.links.map(([label, href]) => <Link href={href} key={href}><span>{label}</span></Link>)}</nav>)}
-        <nav className="footer-correspondence" aria-label="Contact routes"><h2>Start a conversation</h2><Link href="/contact?type=research">Research collaboration</Link><Link href="/contact?type=pilot">Product pilots</Link><Link href="/contact?type=investment">Investment enquiries</Link><Link href="/contact">General enquiries</Link><Link href="/privacy">Privacy & data</Link></nav>
+        <nav className="footer-correspondence" aria-label="Contact routes"><h2>Start a conversation</h2><a href="mailto:hello@gerontology.app">hello@gerontology.app</a><Link href="/contact?type=research">Research collaboration</Link><Link href="/contact?type=pilot">Product pilots</Link><Link href="/contact?type=investment">Investment enquiries</Link><Link href="/contact">General enquiries</Link><Link href="/privacy">Privacy & data</Link></nav>
       </div>
       <div className="footer-bottom"><span>© {new Date().getFullYear()} ProAge Atlas</span><span>Scientific context · Open Institute of Age and Aging</span></div>
     </div>

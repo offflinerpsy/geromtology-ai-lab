@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 
-// Change this one authority when a custom domain is connected and verified.
-export const SITE_ORIGIN = 'https://proage-atlas.offflinerpsy.workers.dev';
+export const SITE_ORIGIN = 'https://gerontology.app';
 export function pageMetadata(title: string, description: string, path: string): Metadata {
   return {
     title, description,

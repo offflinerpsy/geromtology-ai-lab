@@ -9,6 +9,17 @@
   ],
   "workers_dev": true,
   "preview_urls": false,
+  "routes": [
+    { "pattern": "gerontology.app", "custom_domain": true },
+    { "pattern": "www.gerontology.app", "custom_domain": true }
+  ],
+  "send_email": [
+    {
+      "name": "EMAIL",
+      "allowed_sender_addresses": ["notifications@gerontology.app"],
+      "allowed_destination_addresses": ["offflinerpsy@gmail.com"]
+    }
+  ],
   "observability": {
     "enabled": true
   },
