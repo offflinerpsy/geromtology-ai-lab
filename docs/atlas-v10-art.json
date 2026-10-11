@@ -1,0 +1,70 @@
+{
+  "method": "Built-in image_gen.imagegen, two concurrent independent calls. No CLI/API fallback and no model selector. Source reference inspected for emerald/ivory palette and translucency only; no reference image passed to generation. PNGs copied byte-for-byte. Pillow WebP encoding: A RGB quality=88 method=6; B RGBA quality=90 method=6 exact=true. Original B alpha preserved and compared after WebP decoding.",
+  "prompts": {
+    "A": "Use case: stylized-concept.\nAsset type: production website research laboratory bench backdrop for a premium business science platform, intended for subtle WebGL distortion and GSAP parallax.\nPrimary request: create a wide landscape 3:2 cinematic photorealistic laboratory still-life with extraordinary physical depth and elegant, naturally refractive scientific glass.\nScene/backdrop: a dark research laboratory bench in deep forest green and ink black, with restrained polished reflections and a softly receding almost-black room.\nSubject: glass culture dishes containing emerald liquid, a small group of capped specimen vials, a finely made microfluidic glass chip, and minimal precise stainless laboratory hardware. Make each item credible and tactile, premium and real.\nStyle/medium: highest-fidelity photorealistic 3D macro product photography, refined organic scientific beauty, delicate glass translucency and physical refraction, natural imperfections, sophisticated business science.\nComposition/framing: wide 3:2 landscape; low close camera grazing the bench, layered foreground and background; instruments concentrated on the right 65%, with the entire left 45% predominantly very dark quiet negative space for a large headline. Objects enter the composition gently from the center toward the right. Strong depth, foreground glass curves and distant small vials, no cramped clutter.\nLighting/mood: calm cinematic emerald and warm ivory highlights, a soft luminous rim on clear glass, physically plausible caustics and specular reflections, rich nuanced shadows, restrained soft focus in depth. The focal glass details are beautifully sharp.\nColor palette: near-black forest green, emerald aqueous liquid, clear ivory glass highlights, a little fine brushed stainless steel.\nText: none.\nConstraints: no people, no letters, no labels, no logos, no watermark, no fake data, no UI, no HUD, no diagram, no planet, no orbit, no blue neon. Avoid a science fiction or video game look. Keep the scene quiet, premium, physically credible, and composed for headline legibility.",
+    "B": "Use case: product-mockup.\nAsset type: production transparent object layer for an animated premium research laboratory website stage.\nPrimary request: create an isolated scientific still-life of exactly three elegant laboratory glass vials of different heights, with one thin borosilicate glass pipette angled across them, a few small droplets, and pale emerald aqueous liquid in the vials.\nScene/backdrop: genuinely transparent background with true alpha, no environmental backdrop or floor plane.\nSubject: three natural physically realistic clear borosilicate glass vials, one tall, one medium, one short, with elegant unmarked plain caps; a thin glass pipette leaning diagonally across the group without hiding the vials. Small beautiful water droplets and pale emerald liquid with realistic menisci.\nStyle/medium: highest-fidelity photorealistic macro product rendering, refined glass translucency, physically realistic clear glass thickness and refraction, tactile caustics, delicate specular ivory highlights, premium business science.\nComposition/framing: landscape 3:2 canvas; show every object in full, centered group, generous transparent breathing room on all sides, no cropping, no object touching the frame edge. Three vials clearly distinguishable in a balanced arrangement, natural close product camera perspective.\nLighting/mood: soft warm ivory studio illumination with restrained emerald reflections, beautiful luminous glass edges, refined dimensionality, subtle physically realistic highlights and no artificial glow.\nColor palette: clear glass, pale emerald aqueous liquid, restrained warm ivory highlights, subtle fine stainless caps.\nText: none.\nConstraints: actual transparent alpha, full isolated objects only; no podium, no black box, no background, no opaque backdrop, no floor, no cast shadow plane, no labels, no letters, no logos, no watermark, no HUD, no sci-fi game aesthetic, no blue neon. Preserve realistic see-through glass within the isolated cutout."
+  },
+  "source_png": {
+    "A": "/workspace/scratch/efc592de049b/generated_images/exec-aceeea03-326d-4a2f-a30b-dd17eb3c5f1e.png",
+    "B": "/workspace/scratch/efc592de049b/generated_images/exec-b68a62e2-bcc1-427c-90cd-ad86531cbd33.png"
+  },
+  "inspection": "Both outputs visually inspected. A: right-weighted credible glass culture dishes, capped vials, microfluidic glass and stainless tools; left title space predominantly dark. B: exactly three vials of distinct heights, diagonal pipette, pale emerald liquid and droplets; full main objects inside frame. A temporary dark green composite confirmed true transparent cutout without a black backdrop; that inspection file was discarded.",
+  "assets": [
+    {
+      "asset": "A",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "webp_quality": 88,
+      "png": {
+        "path": "/workspace/scratch/efc592de049b/atlas-v10-assets/lab-bench-v10.png",
+        "bytes": 2018472,
+        "mode": "RGB",
+        "sha256": "e7c1a6f675e74b12f0083faa32fe40d9c208919ae503c4e27d8eede0c85be4b3"
+      },
+      "webp": {
+        "path": "/workspace/scratch/efc592de049b/atlas-v10-assets/lab-bench-v10.webp",
+        "bytes": 155352,
+        "mode": "RGB",
+        "sha256": "3d7b38c97591f31549e081330c77028721905462ce947232dbd16c90456868f6"
+      },
+      "alpha": {
+        "has_alpha": false,
+        "background": "opaque RGB"
+      }
+    },
+    {
+      "asset": "B",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "webp_quality": 90,
+      "png": {
+        "path": "/workspace/scratch/efc592de049b/atlas-v10-assets/lab-glass-v10.png",
+        "bytes": 1817293,
+        "mode": "RGBA",
+        "sha256": "a9e7243aadd40b6acbd8dc978a5a6801b66ca220a539aa409b90734d7c1f1f58"
+      },
+      "webp": {
+        "path": "/workspace/scratch/efc592de049b/atlas-v10-assets/lab-glass-v10.webp",
+        "bytes": 209408,
+        "mode": "RGBA",
+        "sha256": "233565f0b59be7fb8358d9f67eaea1409e87003d056ff2c1783d0fb643165813"
+      },
+      "alpha": {
+        "has_alpha": true,
+        "extrema": [
+          0,
+          254
+        ],
+        "transparent_pixels": 1081974,
+        "opaque_pixels": 0,
+        "partial_alpha_pixels": 490890,
+        "transparent_pixel_fraction": 0.6879005432128906,
+        "original_and_webp_alpha_identical": true
+      }
+    }
+  ]
+}

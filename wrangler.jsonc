@@ -1,0 +1,32 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "proage-atlas",
+  "account_id": "0609100baf768271ea2811c9a9ee2b16",
+  "main": "vinext/server/fetch-handler",
+  "compatibility_date": "2026-10-11",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "proage-atlas",
+      "database_id": "e4a9bb4a-6f55-4ddf-9736-4aee5d2bde24",
+      "migrations_dir": "drizzle"
+    }
+  ],
+  "vars": {
+    "AZURE_OPENAI_RESPONSES_URL": "https://offflinerpsy-4097-resource.services.ai.azure.com/openai/v1/responses",
+    "AZURE_OPENAI_DEPLOYMENT": "gpt-6-luna",
+    "ACCESS_TEAM_DOMAIN": "curly-cloud-alexyarosh.cloudflareaccess.com",
+    "ACCESS_AUDIENCES": "0d7ab694c3933b567a3c2401af1b0f83a8d2b8558a4dacb626948cdf05e1ab29,69ef78ba3906766d5d5f5e5dfdbff0ef46170a91c1a4cfae77e2257ded11fe21"
+  }
+}

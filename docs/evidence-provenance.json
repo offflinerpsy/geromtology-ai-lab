@@ -1,0 +1,90 @@
+{
+  "accessed": "2026-10-05",
+  "note": "Curated original summaries; no article full text, abstract quotations, or precise intervention-effect figures redistributed. Not a systematic review. DO-HEALTH and CALERIE methylation analyses explicitly post hoc; clinical PhenoAge distinguished from DNAm PhenoAge.",
+  "sources": [
+    {
+      "id": "levine-phenoage-2018",
+      "ref": "turn24view7",
+      "url": "https://www.aging-us.com/article/101414/text",
+      "readScope": "full paper"
+    },
+    {
+      "id": "horvath-clock-2013",
+      "ref": "turn20view5",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24138928/",
+      "readScope": "original-paper abstract and metadata"
+    },
+    {
+      "id": "dunedinpace-2022",
+      "ref": "turn27view1",
+      "url": "https://scholars.duke.edu/publication/1506978",
+      "readScope": "authors' institutional abstract and metadata"
+    },
+    {
+      "id": "hallmarks-2023",
+      "ref": "turn26view6",
+      "url": "https://discovery.ucl.ac.uk/id/eprint/10207541/",
+      "readScope": "authors' institutional abstract and metadata"
+    },
+    {
+      "id": "who-ageing-health-2025",
+      "ref": "turn26view2",
+      "url": "https://www.who.int/news-room/fact-sheets/detail/ageing-and-health",
+      "readScope": "full fact sheet"
+    },
+    {
+      "id": "who-icope-2025",
+      "ref": "turn26view3",
+      "url": "https://www.who.int/publications/i/item/9789240103726",
+      "readScope": "official publication overview; handbook full text not ingested"
+    },
+    {
+      "id": "sppb-guralnik-1994",
+      "ref": "turn29view0",
+      "url": "https://scholars.duke.edu/publication/737340",
+      "readScope": "authors' institutional abstract and metadata"
+    },
+    {
+      "id": "bioage-kwon-2021",
+      "ref": "turn27view4",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8602613/",
+      "readScope": "original paper full text"
+    },
+    {
+      "id": "r-power-t-test",
+      "ref": "turn29view1",
+      "url": "https://stat.ethz.ch/R-manual/R-devel/library/stats/html/power.t.test.html",
+      "readScope": "official development-version software documentation; year means access year"
+    },
+    {
+      "id": "gpower-faul-2007",
+      "ref": "turn23view2",
+      "url": "https://link.springer.com/article/10.3758/BF03193146",
+      "readScope": "publisher abstract and metadata"
+    },
+    {
+      "id": "calerie-dnam-2023",
+      "ref": "turn25view2",
+      "url": "https://www.nature.com/articles/s43587-022-00357-y",
+      "readScope": "original paper full text"
+    },
+    {
+      "id": "calerie-cardiometabolic-2019",
+      "ref": "turn27view3",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6707879/",
+      "readScope": "original paper full text"
+    },
+    {
+      "id": "life-pahor-2014",
+      "ref": "turn24view5",
+      "url": "https://jamanetwork.com/journals/jama/fullarticle/1875328",
+      "readScope": "original paper full text"
+    },
+    {
+      "id": "do-health-dnam-2025",
+      "ref": "turn26view1",
+      "url": "https://do-health.eu/individual-and-additive-effects-of-vit-d-omega-3-and-exercise-on-dna-methylation-clocks-of-biological-aging/",
+      "readScope": "original trial authors' abstract and metadata"
+    }
+  ]
+}

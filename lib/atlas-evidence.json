@@ -1,0 +1,254 @@
+[
+  {
+    "id": "levine-phenoage-2018",
+    "title": "An epigenetic biomarker of aging for lifespan and healthspan",
+    "authors": "Morgan E. Levine, Ake T. Lu, Austin Quach, et al.",
+    "year": 2018,
+    "url": "https://doi.org/10.18632/aging.101414",
+    "category": "Aging clocks",
+    "studyType": "Observational biomarker development and validation",
+    "summary": "The authors first developed clinical Phenotypic Age from chronological age and nine blood biomarkers using NHANES data and mortality follow-up. They then trained a separate DNA methylation predictor, DNAm PhenoAge, using 513 CpG sites. These are related but different measurements: the clinical version uses routine laboratory chemistry and blood counts, whereas the epigenetic version requires methylation data. Validation examined associations with morbidity, mortality and physical functioning. The paper explains why a model trained on health-related outcomes can differ from a clock trained mainly on calendar age.",
+    "limitation": "Observational prediction is not proof that lowering the score improves health or extends life. Clinical PhenoAge and DNAm PhenoAge are not interchangeable.",
+    "tags": [
+      "PhenoAge",
+      "clinical blood",
+      "DNA methylation",
+      "NHANES",
+      "mortality prediction"
+    ]
+  },
+  {
+    "id": "horvath-clock-2013",
+    "title": "DNA methylation age of human tissues and cell types",
+    "authors": "Steve Horvath",
+    "year": 2013,
+    "url": "https://doi.org/10.1186/gb-2013-14-10-r115",
+    "category": "Aging clocks",
+    "studyType": "Multi-tissue biomarker development and validation",
+    "summary": "This study introduced a predictor of age from DNA methylation across human tissues and cell types. The model combines measurements at 353 CpG sites and was developed from thousands of samples across many methylation-array datasets. It established that an epigenetic age estimate could track chronological age beyond a single tissue. The paper also examined differences in stem cells, cell passage and cancer samples. It provides a foundation for comparing age-prediction clocks with later models trained on mortality risk or longitudinal physiological change.",
+    "limitation": "A chronological-age predictor does not directly measure an individual's aging speed. Tissue, preprocessing and technical variation affect interpretation.",
+    "tags": [
+      "Horvath clock",
+      "DNA methylation",
+      "353 CpGs",
+      "multi-tissue",
+      "chronological age"
+    ]
+  },
+  {
+    "id": "dunedinpace-2022",
+    "title": "DunedinPACE, a DNA methylation biomarker of the pace of aging",
+    "authors": "Daniel W. Belsky, Avshalom Caspi, David L. Corcoran, et al.",
+    "year": 2022,
+    "url": "https://doi.org/10.7554/eLife.73420",
+    "category": "Aging clocks",
+    "studyType": "Longitudinal cohort biomarker development and external validation",
+    "summary": "DunedinPACE translates two decades of physiological change into a DNA methylation measure from a blood sample. Its training target used repeated assessments of 19 indicators of organ-system integrity in the Dunedin birth cohort. The investigators used elastic-net modelling and excluded unreliable methylation probes, then evaluated the resulting measure in additional datasets. Unlike an age estimate expressed in years, the output represents relative pace of biological change. Associations with morbidity, disability and mortality support its use as a research measurement rather than a routine blood-chemistry calculator.",
+    "limitation": "Requires appropriately processed DNA methylation data. Ordinary blood-test values or questionnaire answers cannot reproduce DunedinPACE.",
+    "tags": [
+      "DunedinPACE",
+      "DNA methylation",
+      "pace of aging",
+      "longitudinal cohort",
+      "reliability"
+    ]
+  },
+  {
+    "id": "hallmarks-2023",
+    "title": "Hallmarks of aging: An expanding universe",
+    "authors": "Carlos López-Otín, Maria A. Blasco, Linda Partridge, Manuel Serrano and Guido Kroemer",
+    "year": 2023,
+    "url": "https://doi.org/10.1016/j.cell.2022.11.001",
+    "category": "Foundations",
+    "studyType": "Mechanistic review and conceptual framework",
+    "summary": "This review updates a conceptual framework for studying aging mechanisms, proposing twelve interconnected hallmarks. The framework covers molecular damage, altered regulation and changes in tissue or organism function, including inflammation and interactions with microbial communities. The authors assess hallmarks against experimental criteria: association with age, acceleration of aging when intensified and potential modification through interventions. For research design, the paper helps distinguish a biological mechanism from a measurable endpoint. It also explains why an intervention targeting one pathway can influence several connected processes.",
+    "limitation": "A mechanistic framework is not a validated individual score or proof that a particular intervention extends human lifespan.",
+    "tags": [
+      "hallmarks",
+      "aging biology",
+      "mechanisms",
+      "inflammation",
+      "cellular senescence"
+    ]
+  },
+  {
+    "id": "who-ageing-health-2025",
+    "title": "Ageing and health",
+    "authors": "World Health Organization",
+    "year": 2025,
+    "url": "https://www.who.int/news-room/fact-sheets/detail/ageing-and-health",
+    "category": "Foundations",
+    "studyType": "Public-health fact sheet",
+    "summary": "WHO describes population aging alongside the diversity of health and capacity among older people. The fact sheet emphasizes that age in years only loosely reflects biological and functional change. Physical and social environments, personal circumstances and lifelong health behaviours influence opportunities for healthy aging. It also outlines the importance of supportive communities, integrated services and long-term care. This source grounds gerontology in the ability to do valued activities, rather than treating longevity or a laboratory score as the only outcome that matters.",
+    "limitation": "A population-level overview does not provide an individual diagnostic model, treatment plan or biological-age calculation.",
+    "tags": [
+      "healthy aging",
+      "public health",
+      "function",
+      "environment",
+      "person-centred care"
+    ]
+  },
+  {
+    "id": "who-icope-2025",
+    "title": "Integrated care for older people (ICOPE): guidance for person-centred assessment and pathways in primary care, 2nd ed",
+    "authors": "World Health Organization",
+    "year": 2025,
+    "url": "https://www.who.int/publications/i/item/9789240103726",
+    "category": "Function & care",
+    "studyType": "Clinical and community-care handbook",
+    "summary": "The second edition of the ICOPE handbook supports health and care workers in applying evidence-informed recommendations within primary care and community settings. Its pathways address declines in intrinsic capacity, social-care needs and practical support, leading to an individualized care plan. WHO stresses adapting the pathways to the local context. For a research platform, ICOPE offers a structured way to connect assessment findings with follow-up and person-centred goals. It should be represented as a care framework with professional assessment, rather than compressed into a generic longevity number.",
+    "limitation": "Local adaptation and professional assessment are required. The handbook is not an automated molecular clock or a substitute for a care team.",
+    "tags": [
+      "ICOPE",
+      "intrinsic capacity",
+      "primary care",
+      "assessment",
+      "care pathways"
+    ]
+  },
+  {
+    "id": "sppb-guralnik-1994",
+    "title": "A short physical performance battery assessing lower extremity function: association with self-reported disability and prediction of mortality and nursing home admission",
+    "authors": "Jack M. Guralnik, Eleanor M. Simonsick, Luigi Ferrucci, et al.",
+    "year": 1994,
+    "url": "https://doi.org/10.1093/geronj/49.2.M85",
+    "category": "Function & care",
+    "studyType": "Observational cohort study of physical performance",
+    "summary": "The study assessed lower-extremity function in older adults using standing balance, a timed eight-foot walk and repeated chair rises. It showed that observed performance and self-reported disability provide complementary information. Performance measures were associated with subsequent mortality and nursing-home admission, including differences among people who reported little disability. This work supports measuring function directly when studying aging and independence. The original walking distance matters: later protocols using a four-metre course should be documented as their own version rather than silently attributed to this paper.",
+    "limitation": "Associations are observational. Protocol versions and scoring thresholds must match the actual test; results are not a molecular-age estimate.",
+    "tags": [
+      "SPPB",
+      "physical function",
+      "balance",
+      "gait speed",
+      "chair rises"
+    ]
+  },
+  {
+    "id": "bioage-kwon-2021",
+    "title": "A toolkit for quantification of biological age from blood chemistry and organ function test data: BioAge",
+    "authors": "Dayoon Kwon and Daniel W. Belsky",
+    "year": 2021,
+    "url": "https://doi.org/10.1007/s11357-021-00480-5",
+    "category": "Aging clocks",
+    "studyType": "Methods and software study with trial-data application",
+    "summary": "BioAge is an R toolkit for constructing and applying measures of biological aging from clinical biomarkers. The publication describes implementations of Klemera-Doubal biological age, PhenoAge and homeostatic dysregulation, including training and testing with NHANES data. It supports comparisons between published algorithms and versions using custom biomarker sets. An application to CALERIE illustrates how these measures can be evaluated in intervention research. The central methodological lesson is that changing the biomarker set or calibration creates a different measurement that needs its own evaluation.",
+    "limitation": "Customized algorithms require validation and are not identical to published clocks. Biomarker changes do not themselves establish gains in lifespan.",
+    "tags": [
+      "BioAge",
+      "clinical blood",
+      "KDM",
+      "PhenoAge",
+      "calibration"
+    ]
+  },
+  {
+    "id": "r-power-t-test",
+    "title": "Power calculations for one and two sample t tests",
+    "authors": "Peter Dalgaard, based on work by Claus Ekstrøm; R stats documentation",
+    "year": 2026,
+    "url": "https://stat.ethz.ch/R-manual/R-devel/library/stats/html/power.t.test.html",
+    "category": "Research methods",
+    "studyType": "Official statistical software documentation; accessed October 2026",
+    "summary": "The R documentation describes power.t.test, which solves for power, sample size, mean difference, standard deviation or significance level under a specified t-test design. It distinguishes one-sample, paired and two-sample analyses, together with one-sided and two-sided alternatives. For two-sample calculations, the sample-size argument refers to observations per group. The documentation also explains the treatment of rejection in the direction opposite to the true effect. This provides a transparent reference for checking a planner's assumptions and numerical behaviour rather than interpreting power as a probability that a hypothesis is true.",
+    "limitation": "Assumes the specified test and model. A simple t-test calculation does not cover clustering, repeated measures, unequal variances or survival endpoints.",
+    "tags": [
+      "power",
+      "sample size",
+      "t test",
+      "study planning",
+      "R documentation"
+    ]
+  },
+  {
+    "id": "gpower-faul-2007",
+    "title": "G*Power 3: a flexible statistical power analysis program for the social, behavioral, and biomedical sciences",
+    "authors": "Franz Faul, Edgar Erdfelder, Albert-Georg Lang and Axel Buchner",
+    "year": 2007,
+    "url": "https://doi.org/10.3758/BF03193146",
+    "category": "Research methods",
+    "studyType": "Statistical methods and software paper",
+    "summary": "This methods paper presents G*Power 3 as a general program for planning and evaluating statistical power across multiple test families. It describes support for t, F, chi-square, z and selected exact tests, extending earlier versions of the software. The work illustrates why sample-size planning begins with a specific design, effect-size definition and error assumptions. For a focused research calculator, it is a useful benchmark for transparent inputs and outputs. It does not imply that one sample-size formula can be applied to every experimental endpoint.",
+    "limitation": "The appropriate test and effect model must be chosen first. Agreement for one design does not validate other designs or clinical decisions.",
+    "tags": [
+      "G*Power",
+      "power analysis",
+      "sample size",
+      "effect size",
+      "design assumptions"
+    ]
+  },
+  {
+    "id": "calerie-dnam-2023",
+    "title": "Effect of long-term caloric restriction on DNA methylation measures of biological aging in healthy adults from the CALERIE trial",
+    "authors": "Reem Waziry, Calen P. Ryan, David L. Corcoran, et al.",
+    "year": 2023,
+    "url": "https://doi.org/10.1038/s43587-022-00357-y",
+    "category": "Human studies",
+    "studyType": "Post hoc biomarker analysis of a randomized controlled trial",
+    "summary": "This CALERIE analysis studied DNA methylation measures after two years of calorie restriction in adults without obesity. The randomized comparison found a modest reduction in DunedinPACE, while principal-component versions of DNAm PhenoAge and GrimAge did not show corresponding treatment effects. The different responses illustrate that aging clocks reflect different targets and can disagree within the same trial. Measurements came from blood methylation rather than routine clinical chemistry. The study provides human intervention evidence for a particular biomarker response, not a direct demonstration of increased lifespan.",
+    "limitation": "Post hoc analysis with limited follow-up. A methylation biomarker effect does not establish longer life, prevention of disease or benefit for every individual.",
+    "tags": [
+      "CALERIE",
+      "randomized trial",
+      "calorie restriction",
+      "DNA methylation",
+      "DunedinPACE"
+    ]
+  },
+  {
+    "id": "calerie-cardiometabolic-2019",
+    "title": "2 years of calorie restriction and cardiometabolic risk (CALERIE): exploratory outcomes of a multicentre, phase 2, randomised controlled trial",
+    "authors": "William E. Kraus, Manjushri Bhapkar, Kim M. Huffman, et al.",
+    "year": 2019,
+    "url": "https://doi.org/10.1016/S2213-8587(19)30151-2",
+    "category": "Human studies",
+    "studyType": "Exploratory outcomes of a phase 2 randomized controlled trial",
+    "summary": "CALERIE compared a calorie-restriction programme with usual intake over two years in healthy adults without obesity. This report examined exploratory cardiometabolic outcomes, including lipids, blood pressure, glucose regulation and inflammatory measures. Participants achieved less restriction than the prescribed target, which matters when interpreting the intervention. Several risk-factor measurements improved in the randomized comparison. The study is useful for separating a change in a clinical risk marker from an observed disease event, and for recognizing that implementation, adherence and eligibility shape the meaning of trial results.",
+    "limitation": "Exploratory risk-factor outcomes over two years do not prove reductions in clinical events or lifespan extension; generalizability is limited by eligibility.",
+    "tags": [
+      "CALERIE",
+      "randomized trial",
+      "clinical biomarkers",
+      "cardiometabolic health",
+      "adherence"
+    ]
+  },
+  {
+    "id": "life-pahor-2014",
+    "title": "Effect of structured physical activity on prevention of major mobility disability in older adults: the LIFE study randomized clinical trial",
+    "authors": "Marco Pahor, Jack M. Guralnik, Walter T. Ambrosius, et al.",
+    "year": 2014,
+    "url": "https://doi.org/10.1001/jama.2014.5616",
+    "category": "Human studies",
+    "studyType": "Multicentre randomized controlled trial with blinded outcome assessment",
+    "summary": "The LIFE trial compared a structured programme of moderate physical activity with health education in older adults at risk of disability. Its primary outcome was major mobility disability, measured as losing the ability to walk 400 metres. Physical activity reduced that outcome over an average follow-up of roughly two and a half years. This is evidence for a functional endpoint that matters to independence, rather than an inferred molecular age. The trial also tracked adverse events, making it a useful example of interpreting benefit alongside safety and participant eligibility.",
+    "limitation": "Findings concern a selected population and mobility outcomes. The trial did not demonstrate a reduction in mortality or justify unsupervised exercise for everyone.",
+    "tags": [
+      "LIFE",
+      "randomized trial",
+      "mobility",
+      "physical activity",
+      "functional outcome"
+    ]
+  },
+  {
+    "id": "do-health-dnam-2025",
+    "title": "Individual and additive effects of vitamin D, omega-3 and exercise on DNA methylation clocks of biological aging in older adults from the DO-HEALTH trial",
+    "authors": "Heike A. Bischoff-Ferrari, Stephanie Gängler, Maud Wieczorek, et al.",
+    "year": 2025,
+    "url": "https://doi.org/10.1038/s43587-024-00793-y",
+    "category": "Human studies",
+    "studyType": "Post hoc methylation analysis of a factorial randomized controlled trial",
+    "summary": "This post hoc analysis examined blood DNA methylation from a subset of older adults in DO-HEALTH over three years. It evaluated omega-3 supplementation, vitamin D and a home exercise programme against several aging-clock outcomes. Omega-3 showed modest effects across some clocks, while an additive pattern for the combined interventions appeared for DNAm PhenoAge. Results differed by measure, emphasizing that clocks are not interchangeable. The analysis offers a human research example of intervention combinations and biomarker sensitivity; it does not establish that routine supplementation lengthens life.",
+    "limitation": "Post hoc subset analysis and small biomarker effects. Findings do not establish clinical-event prevention, lifespan gains or universal supplement recommendations.",
+    "tags": [
+      "DO-HEALTH",
+      "factorial trial",
+      "DNA methylation",
+      "omega-3",
+      "aging clocks"
+    ]
+  }
+]

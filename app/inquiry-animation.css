@@ -1,0 +1,50 @@
+.research-living {position: relative;isolation: isolate;overflow: clip;}
+.research-living .section-heading {position: relative;z-index: 2;}
+.research-living .research-layout {position: relative;isolation: isolate;grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);}
+.inquiry-art {position: absolute;inset: -95px -70px auto;height: 820px;z-index: 0;pointer-events: none;filter: grayscale(.18) sepia(.52) hue-rotate(40deg) saturate(.9) brightness(.65) contrast(1.2);mask-image: linear-gradient(180deg, #000 67%, transparent 91%);}
+.inquiry-still, .inquiry-art > canvas {position: absolute;inset: 0;width: 100%;height: 100%;transition: opacity 1.1s var(--ease-editorial);}
+.inquiry-sprite {position: absolute;left: var(--x);top: var(--y);width: var(--size);aspect-ratio: 1.5;opacity: var(--opacity);transform: translate(-50%, -50%) rotate(var(--angle));overflow: hidden;mask-image: linear-gradient(90deg, transparent, #000 4.5%, #000 95.5%, transparent), linear-gradient(180deg, transparent, #000 4.5%, #000 95.5%, transparent);mask-composite: intersect;}
+.inquiry-sprite > img {position: absolute;width: 200%;height: 200%;max-width: none;}
+.inquiry-art > canvas {opacity: 0;}
+.inquiry-art[data-ready="true"] .inquiry-still {opacity: 0;}
+.inquiry-art[data-ready="true"] > canvas {opacity: 1;}
+.research-living .inquiry-space {position: relative;z-index: 1;overflow: visible;background: transparent;height: 600px;pointer-events: none;}
+.research-living .research-list {position: relative;z-index: 2;min-width: 0;}
+.inquiry-caption {position: absolute;inset: auto 0 0;display: flex;justify-content: space-between;align-items: end;gap: 28px;}
+.inquiry-caption > p {font-family: var(--font-editorial);font-size: 1.5rem;line-height: 1.3;letter-spacing: -.02em;}
+.inquiry-caption > div {display: flex;flex-direction: column;align-items: end;gap: 4px;min-height: 73px;}
+.inquiry-caption span {font-size: .8125rem;line-height: 1.5;color: #65715e;white-space: nowrap;}
+.inquiry-motion-control {pointer-events: auto;min-height: 44px;padding: 10px 0;border: 0;background: transparent;font: inherit;font-size: .875rem;color: #52614a;cursor: pointer;text-decoration: underline;text-decoration-color: transparent;text-underline-offset: 6px;transition: color .4s, text-decoration-color .4s;}
+.inquiry-motion-control[hidden] {display: none;}
+.inquiry-motion-control:hover {color: var(--foreground);text-decoration-color: currentColor;}
+.inquiry-motion-control:focus-visible {outline: 2px solid #829642;outline-offset: 5px;}
+@media (max-width: 1000px) {
+  .research-living .inquiry-space {height: 570px;}
+  .inquiry-art {inset: -75px -25px auto;height: 750px;}
+  .inquiry-caption {display: block;}
+  .inquiry-caption > div {align-items: start;margin-top: 18px;}
+}
+@media (max-width: 800px) {
+  .research-living .research-layout {grid-template-columns: minmax(0, 1fr);gap: 35px;}
+  .research-living .inquiry-space {height: clamp(330px, 55vw, 430px);}
+  .inquiry-art {inset: -30px -12px auto;height: 480px;mask-image: linear-gradient(180deg, #000 47%, transparent 69%);}
+  .inquiry-sprite[data-inquiry-sprite="0"] {--x: 41% !important;--y: 37% !important;--size: 65% !important;}
+  .inquiry-sprite[data-inquiry-sprite="1"] {--x: 13% !important;--y: 13% !important;--size: 27% !important;}
+  .inquiry-sprite[data-inquiry-sprite="2"] {--x: 77% !important;--y: 54% !important;--size: 37% !important;}
+  .inquiry-sprite[data-inquiry-sprite="3"] {--x: 89% !important;--y: 25% !important;--size: 24% !important;--opacity: .42 !important;}
+  .inquiry-sprite[data-inquiry-sprite="4"] {--opacity: .08 !important;}
+  .inquiry-caption {display: flex;}
+  .inquiry-caption > div {align-items: end;margin-top: 0;}
+  .inquiry-caption > p {font-size: 1.4rem;}
+}
+@media (max-width: 520px) {
+  .research-living .inquiry-space {height: 350px;}
+  .inquiry-caption {gap: 15px;}
+  .inquiry-caption > p {font-size: 1.25rem;}
+  .inquiry-caption span {font-size: .75rem;white-space: normal;max-width: 100px;text-align: right;}
+}
+@media (prefers-reduced-motion: reduce) {
+  .inquiry-art .inquiry-still, .inquiry-art[data-ready="true"] .inquiry-still {opacity: 1;transition: none;}
+  .inquiry-art > canvas, .inquiry-art[data-ready="true"] > canvas, .inquiry-motion-control {display: none;}
+}
+@media print {.inquiry-art, .inquiry-motion-control {display: none;}.research-living .inquiry-space {height: auto;}.inquiry-caption {position: static;}}
