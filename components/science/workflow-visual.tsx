@@ -10,7 +10,9 @@ export default function WorkflowVisual({ kind, completion = 10 }: { kind: 'evide
   const id = useId().replace(/:/g,'');
   useEffect(() => {
     const svg = root.current;
-    if (!svg || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!svg) return;
+    const media = gsap.matchMedia();
+    media.add('(prefers-reduced-motion: no-preference)',()=>{
     const paths = [...svg.querySelectorAll<SVGPathElement>('[data-draw]')];
     let observer: IntersectionObserver;
     const context = gsap.context(() => {
@@ -20,6 +22,8 @@ export default function WorkflowVisual({ kind, completion = 10 }: { kind: 'evide
       observer.observe(svg);
     },svg);
     return () => { observer?.disconnect(); context.revert(); };
+    });
+    return ()=>media.revert();
   },[kind]);
   return <svg ref={root} className={`workflow-art workflow-art-${kind}`} viewBox="0 0 340 160" aria-hidden="true">
     <defs><linearGradient id={`${id}-area`} x1="0" y1="0" x2="0" y2="1"><stop stopColor="#c5beb2" stopOpacity=".16"/><stop offset="1" stopColor="#c5beb2" stopOpacity="0"/></linearGradient></defs>

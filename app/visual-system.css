@@ -173,3 +173,8 @@ a:is(:hover,:focus-visible) img{transform:none!important;scale:none!important;tr
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.scientific-stage>canvas{display:none}.scientific-plate{opacity:1!important;transition:none}.scientific-study *,.workflow-art *{animation:none!important;transition:none!important}.hero-art-live{will-change:auto}.will-reveal,.is-visible{transform:none!important;opacity:1!important}.atlas a,.atlas button,.text-link::after{transition:none!important}}
 
 .copilot-evidence-art .workflow-art{height:180px;max-width:300px;color:#bdb9b1}.workflow-art-biomarkers g{transition:opacity .45s}
+
+/* Finite vector entrance also works on devices that cannot create a GPU context. */
+.scientific-stage[data-ready=false] .scientific-plate>g{animation:scientific-plate-enter 3.2s ease-out both}
+@keyframes scientific-plate-enter{from{opacity:.35}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.scientific-stage[data-ready=false] .scientific-plate>g{animation:none}}

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
 import WorkflowVisual from '@/components/science/workflow-visual';
-import { ArrowRight, Check, Download, Search, X } from 'lucide-react';
+import { Check, Download, Search, X } from 'lucide-react';
 import { evidenceSources, searchEvidence, type EvidenceSource } from '@/lib/atlas-evidence';
 import type { CopilotAnswer } from '@/lib/evidence-copilot';
 import { downloadJSON } from './export';
@@ -29,7 +29,7 @@ export default function EvidenceCopilot({initialSource}:{initialSource?:string})
     <div className="copilot-layout"><div className="atlas-panel copilot-question-panel">
       <form onSubmit={synthesize}><label className="atlas-kicker" htmlFor="research-question">Begin with a question</label><textarea id="research-question" maxLength={2000} rows={4} value={question} disabled={busy} onChange={e=>{setQuestion(e.target.value);setAnswer(null);}} placeholder="What does this evidence support—and where does it stop?" aria-describedby="copilot-scope"/>
       <p id="copilot-scope" className="atlas-private-note">Use a scientific question. Do not enter patient names, medical records or personal blood results.</p>
-      <div className="copilot-composer-actions"><button type="button" className="atlas-action" disabled={busy||question.trim().length<2} onClick={()=>discover()}><Search size={16}/>Find sources</button><button type="submit" className="atlas-action atlas-action-primary" disabled={status!=='ready'||!authenticated||busy||!selected.length||question.trim().length<8}>{busy?'Synthesizing…':'Ask Evidence Copilot'}<ArrowRight size={16}/></button></div>
+      <div className="copilot-composer-actions"><button type="button" className="atlas-action" disabled={busy||question.trim().length<2} onClick={()=>discover()}><Search size={16}/>Find sources</button><button type="submit" className="atlas-action atlas-action-primary" disabled={status!=='ready'||!authenticated||busy||!selected.length||question.trim().length<8}>{busy?'Synthesizing…':'Ask Evidence Copilot'}</button></div>
       {status==='ready'&&!authenticated&&<p className="copilot-connection-note"><a className="atlas-quiet" href="/auth/login?return_to=%2Flaboratory%2Fask" target="_top">Sign in securely to ask the assistant</a> Source discovery is available without sign-in.</p>}
       {status==='setup'&&<p className="copilot-connection-note">AI synthesis awaits a server-side connection. You can search, select and read sources now; no generated answer is shown until a model is connected.</p>}
       {status==='error'&&<button className="atlas-quiet" type="button" onClick={()=>void checkStatus()}>Retry connection check</button>}

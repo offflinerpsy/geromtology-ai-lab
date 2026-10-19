@@ -3,7 +3,9 @@ import { gsap } from 'gsap';
 
 /** Etched, sectional geometry. No photographic planes or endlessly floating props. */
 export function mountScientificScene(root: HTMLElement, canvas: HTMLCanvasElement, kind: 'cell' | 'molecule') {
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'low-power' });
+  const context=canvas.getContext('webgl2',{alpha:true,antialias:true,powerPreference:'low-power'});
+  if(!context)throw new Error('The scientific SVG plate is retained when WebGL is unavailable.');
+  const renderer = new THREE.WebGLRenderer({ canvas, context, alpha: true, antialias: true, powerPreference: 'low-power' });
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, innerWidth < 700 ? 1.35 : 1.75));
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
