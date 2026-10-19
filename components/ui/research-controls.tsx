@@ -30,7 +30,7 @@ type SelectProps = {
 export function ResearchSelect({ id, name, value, onValueChange, options, disabled, label }: SelectProps) {
   return <Select.Root name={name} value={value} onValueChange={onValueChange} disabled={disabled}>
     <Select.Trigger id={id} className="research-select-trigger" aria-label={label}>
-      <Select.Value/><Select.Icon><ChevronDown size={16}/></Select.Icon>
+      <Select.Value>{options.find(option=>option.value===value)?.label}</Select.Value><Select.Icon><ChevronDown size={16}/></Select.Icon>
     </Select.Trigger>
     <Select.Portal><Select.Content className="research-select-menu" position="popper" sideOffset={7} collisionPadding={16}>
       <Select.Viewport>{options.map(option => <Select.Item className="research-select-option" key={option.value} value={option.value}>

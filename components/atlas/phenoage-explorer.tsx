@@ -42,7 +42,7 @@ export default function PhenoAgeExplorer() {
         </div>
         <button type="button" className="research-example-button" onClick={sampleData}>Use example data</button>
       </div>
-      <p className="research-form-note" id="pheno-units-note">Units are shown inside each field. Switching the unit system converts the values you have entered.</p>
+      <p className="research-form-note" id="pheno-units-note">Units appear inside each field; switching units converts your values. Use a dot or comma for decimals, without thousands separators.</p>
       {sample && <p className="atlas-sample-note">Synthetic example loaded. Reset to start with an independent dataset.</p>}
       {Object.values(errors).some(Boolean) && <p className="atlas-error atlas-validation-summary" role="alert">Check the highlighted inputs and their units. All ten values are required.</p>}
       <div aria-describedby="pheno-units-note">{groups.map(group => <fieldset className="research-field-group" key={group.title}>

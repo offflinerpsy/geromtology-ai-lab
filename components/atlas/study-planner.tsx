@@ -28,7 +28,7 @@ export default function StudyPlanner() {
         <NumericField id="ratio" label="Allocation B : A" unit="ratio" value={fields.ratio} onChange={s=>set('ratio',s)} detail="1 is equal group allocation"/>
         <NumericField id="dropout" label="Expected dropout" unit="%" value={fields.dropout} onChange={s=>set('dropout',s)} detail="Recruitment inflated per group"/>
       </div>
-      <p className="atlas-private-note">Starting values are an illustrative design, not parameters from a clinical study.</p><button type="button" className="atlas-quiet" onClick={()=>setFields(initial)}>Restore illustrative design</button>
+      <p className="atlas-private-note">Starting values are an illustrative design, not parameters from a clinical study. Use a dot or comma for decimals, without thousands separators.</p><button type="button" className="atlas-quiet" onClick={()=>setFields(initial)}>Restore illustrative design</button>
     </section>
     <section className="atlas-panel study-result research-result-panel" aria-live="polite" aria-label="Study planning results"><div className="research-result-heading"><h2>Study estimate</h2><span>Two independent groups</span></div>
       {error||!result?<div className="atlas-result-empty"><span>Every assumption<br/>changes the study.</span><p className="atlas-error">{error}</p></div>:<><div className="study-result-top"><div><span className="atlas-result-context">Participants to recruit</span><p className="atlas-result-number"><AnimatedNumber value={result.recruitTotal} grouped/><span>total</span></p></div><div className="study-power-badge"><strong><AnimatedNumber value={result.achievedPower*100} decimals={1}/><small>%</small></strong><span>Achieved power</span></div></div>
