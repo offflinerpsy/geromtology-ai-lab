@@ -15,18 +15,24 @@ export default function WorkflowVisual({ kind, completion = 10 }: { kind: 'evide
     media.add('(prefers-reduced-motion: no-preference)',()=>{
     const paths = [...svg.querySelectorAll<SVGPathElement>('[data-draw]')];
     let observer: IntersectionObserver;
+    let removeVisibility = () => {};
     const context = gsap.context(() => {
-      const motion = gsap.timeline({paused:true});
+      const motion = gsap.timeline({paused:true,repeat:-1,repeatDelay:1.5});
       paths.forEach((path,index) => {const length=path.getTotalLength(); motion.fromTo(path,{strokeDasharray:length,strokeDashoffset:length},{strokeDashoffset:0,duration:2,ease:'power2.out'},index*.12);});
-      observer = new IntersectionObserver(([entry])=>{if(entry.isIntersecting){motion.play();observer.disconnect();}},{threshold:.2});
+      motion.to({}, {duration:1.5});
+      let visible = false;
+      const sync = () => { if (visible && !document.hidden) motion.play(); else motion.pause(); };
+      observer = new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;sync();},{threshold:.2});
       observer.observe(svg);
+      document.addEventListener('visibilitychange',sync);
+      removeVisibility=()=>document.removeEventListener('visibilitychange',sync);
     },svg);
-    return () => { observer?.disconnect(); context.revert(); };
+    return () => { observer?.disconnect(); removeVisibility(); context.revert(); };
     });
     return ()=>media.revert();
   },[kind]);
   return <svg ref={root} className={`workflow-art workflow-art-${kind}`} viewBox="0 0 340 160" aria-hidden="true">
-    <defs><linearGradient id={`${id}-area`} x1="0" y1="0" x2="0" y2="1"><stop stopColor="#c5beb2" stopOpacity=".16"/><stop offset="1" stopColor="#c5beb2" stopOpacity="0"/></linearGradient></defs>
+    <defs><linearGradient id={`${id}-area`} x1="0" y1="0" x2="0" y2="1"><stop stopColor="currentColor" stopOpacity=".16"/><stop offset="1" stopColor="currentColor" stopOpacity="0"/></linearGradient></defs>
     {kind==='evidence' && <g fill="none" stroke="currentColor">
       {[0,1,2].map(i=><g key={i} transform={`translate(${i*22} ${-i*12})`}><path d="M85 49H228V135H85Z" strokeOpacity={.2+i*.12}/><path data-draw="" d="M105 72H173M105 86H201M105 100H187" strokeOpacity={.25+i*.15}/></g>)}
       <path data-draw="" d="M62 94C44 94 44 31 94 31H254C284 31 286 100 265 100" strokeOpacity=".26"/>

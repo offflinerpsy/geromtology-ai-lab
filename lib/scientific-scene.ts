@@ -18,11 +18,11 @@ export function mountScientificScene(root: HTMLElement, canvas: HTMLCanvasElemen
   const key = new THREE.DirectionalLight(0xfff3e0, 4.2); key.position.set(-3, 4, 6); scene.add(key);
   const rim = new THREE.DirectionalLight(0xdce6ef, 3.5); rim.position.set(4, 1, -2); scene.add(rim);
   const group = new THREE.Group(); scene.add(group);
-  const metal = new THREE.MeshStandardMaterial({ color: 0xb7b4ae, metalness: .65, roughness: .27 });
-  const darkMetal = new THREE.MeshStandardMaterial({ color: 0x686765, metalness: .5, roughness: .4 });
-  const core = new THREE.MeshStandardMaterial({ color: 0xb2a898, metalness: .35, roughness: .36 });
-  const fine = new THREE.LineBasicMaterial({ color: 0xe0d9cd, transparent: true, opacity: .32 });
-  const bond = new THREE.MeshStandardMaterial({ color: 0xb5b0a6, metalness: .6, roughness: .4, transparent: true, opacity: .5 });
+  const metal = new THREE.MeshStandardMaterial({ color: 0x9c785c, metalness: .4, roughness: .37 });
+  const darkMetal = new THREE.MeshStandardMaterial({ color: 0x485e6a, metalness: .3, roughness: .42 });
+  const core = new THREE.MeshStandardMaterial({ color: 0xb67a4c, metalness: .3, roughness: .4 });
+  const fine = new THREE.LineBasicMaterial({ color: 0x637c87, transparent: true, opacity: .38 });
+  const bond = new THREE.MeshStandardMaterial({ color: 0x6c8590, metalness: .3, roughness: .42, transparent: true, opacity: .55 });
   const geometries = new Set<THREE.BufferGeometry>();
   const materials = new Set<THREE.Material>([metal, darkMetal, core, fine, bond]);
   const geometry = <T extends THREE.BufferGeometry>(value: T) => { geometries.add(value); return value; };
@@ -39,7 +39,7 @@ export function mountScientificScene(root: HTMLElement, canvas: HTMLCanvasElemen
     const membrane = new THREE.ShaderMaterial({
       transparent: true, depthWrite: false, side: THREE.DoubleSide,
       vertexShader: `varying vec3 vNormal;varying vec3 vView;void main(){vec4 p=modelViewMatrix*vec4(position,1.);vNormal=normalize(normalMatrix*normal);vView=normalize(-p.xyz);gl_Position=projectionMatrix*p;}`,
-      fragmentShader: `varying vec3 vNormal;varying vec3 vView;void main(){float edge=pow(1.-abs(dot(normalize(vNormal),normalize(vView))),2.5);gl_FragColor=vec4(vec3(.84,.82,.78),.035+edge*.48);}`,
+      fragmentShader: `varying vec3 vNormal;varying vec3 vView;void main(){float edge=pow(1.-abs(dot(normalize(vNormal),normalize(vView))),2.5);gl_FragColor=vec4(vec3(.27,.37,.42),.025+edge*.38);}`,
     }); materials.add(membrane);
     const shell = geometry(new THREE.SphereGeometry(2.16, 64, 40, .25, Math.PI*1.62));
     group.add(new THREE.Mesh(shell, membrane));
@@ -78,10 +78,11 @@ export function mountScientificScene(root: HTMLElement, canvas: HTMLCanvasElemen
     }
   }
   let disposed=false, visible=false, frame=0;
-  const state={ reveal:0, scroll:0 };
+  const state={ reveal:0, scroll:0, phase:0 };
   const draw=()=>{
     frame=0;if(disposed||!visible||document.hidden)return;
-    group.rotation.y=(kind==='cell'?-.35:-.4)+(1-state.reveal)*-.45+state.scroll*.13;
+    group.rotation.y=(kind==='cell'?-.35+Math.sin(state.phase)*.25:-.4+state.phase)+(1-state.reveal)*-.45+state.scroll*.13;
+    group.rotation.z=kind==='cell'?-.08+Math.sin(state.phase)*.04:Math.sin(state.phase)*.025;
     group.position.y=(1-state.reveal)*-.15;
     renderer.render(scene,camera);
   };
@@ -89,11 +90,12 @@ export function mountScientificScene(root: HTMLElement, canvas: HTMLCanvasElemen
   const resize=()=>{const bounds=root.getBoundingClientRect();if(!bounds.width||!bounds.height)return;camera.aspect=bounds.width/bounds.height;camera.position.z=(kind==='cell'?10.7:10.2)*Math.max(1,1/camera.aspect*.9);camera.updateProjectionMatrix();renderer.setSize(bounds.width,bounds.height,false);requestDraw();};
   const observer=new ResizeObserver(resize);observer.observe(root);resize();
   const entrance=gsap.to(state,{reveal:1,duration:4.2,ease:'power2.out',paused:true,onUpdate:requestDraw});
-  const intersection=new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;if(visible){if(!document.hidden)entrance.resume();requestDraw();}else entrance.pause();},{threshold:.05});intersection.observe(root);
-  const visibility=()=>{if(document.hidden)entrance.pause();else if(visible){entrance.resume();requestDraw();}};
+  const loop=gsap.to(state,{phase:Math.PI*2,duration:24,ease:'none',repeat:-1,paused:true,onUpdate:requestDraw});
+  const intersection=new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;if(visible){if(!document.hidden){entrance.resume();loop.resume();}requestDraw();}else {entrance.pause();loop.pause();}},{threshold:.05});intersection.observe(root);
+  const visibility=()=>{if(document.hidden){entrance.pause();loop.pause();}else if(visible){entrance.resume();loop.resume();requestDraw();}};
   const scroll=()=>{if(!visible)return;const bounds=root.getBoundingClientRect();state.scroll=Math.max(-1,Math.min(1,(innerHeight/2-bounds.top-bounds.height/2)/innerHeight));requestDraw();};
-  const lost=(event:Event)=>{event.preventDefault();root.dataset.ready='false';entrance.pause();};
+  const lost=(event:Event)=>{event.preventDefault();root.dataset.ready='false';entrance.pause();loop.pause();};
   document.addEventListener('visibilitychange',visibility);window.addEventListener('scroll',scroll,{passive:true});canvas.addEventListener('webglcontextlost',lost);
   root.dataset.ready='true';
-  return ()=>{disposed=true;cancelAnimationFrame(frame);entrance.kill();observer.disconnect();intersection.disconnect();document.removeEventListener('visibilitychange',visibility);window.removeEventListener('scroll',scroll);canvas.removeEventListener('webglcontextlost',lost);geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());renderer.dispose();renderer.forceContextLoss();root.dataset.ready='false';};
+  return ()=>{disposed=true;cancelAnimationFrame(frame);entrance.kill();loop.kill();observer.disconnect();intersection.disconnect();document.removeEventListener('visibilitychange',visibility);window.removeEventListener('scroll',scroll);canvas.removeEventListener('webglcontextlost',lost);geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());renderer.dispose();renderer.forceContextLoss();root.dataset.ready='false';};
 }
