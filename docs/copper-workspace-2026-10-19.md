@@ -14,6 +14,10 @@ Owner correction: the grayscale treatment was too flat and gloomy. Restore the a
 
 ## Verification
 
-TypeScript, focused lint, production build and 24 numerical, input, security and contact tests passed before the isolated Cloudflare review. Responsive and interaction evidence will be recorded after browser review. Local runtime remains unavailable in this execution environment; the review Worker strips production routes, D1, email and environment values.
+TypeScript, focused lint, production build and 24 numerical, input, security and contact tests passed before the isolated Cloudflare review. Local runtime remains unavailable in this execution environment; the review Worker strips production routes, D1, email and environment values.
+
+Browser self-review covered 360, 390, 430, 599, 601, 768, 959, 961, 1440 and 1920 CSS-pixel layouts. No document overflow was observed; custom numeric wells keep a consistent 54px height. PhenoAge produces 41.8 for the synthetic example in SI and conventional units. A zero CRP clears the result, highlights its field and moves keyboard focus there; decimal-comma entry works. The coefficient table has ten terms and scrolls inside its own mobile container. Study Planner changes recruitment from 152 to 62 when the meaningful difference changes from 5 to 8, with corresponding power/curve updates; arrow-key operation changes the target-power slider. The Contact dropdown supports keyboard selection and its native form field retains name=type/value=pilot. Filtering Original research shows ten matching records. No test enquiry was sent.
+
+Scientific stage and model wrapper backgrounds were verified as transparent. Review caught and corrected a CSS specificity conflict that suppressed fallback loops. GPU rendering remains unavailable in the managed browser; final vector loop verification follows on the corrected candidate. The home hero renderers, formula modules, API routes, Access code and production bindings are unchanged.
 
 Rollback: `b1cd5d0c8f3acb5e609fb3c1028948e45520075a`.

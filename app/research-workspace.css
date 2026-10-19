@@ -14,6 +14,7 @@ body{background:var(--paper);color:var(--workspace-ink)}
 .research-entry{background:#eee9e1}.research-entry[open]{background:#e9e1d5}.research-index-link{color:#865337}
 .research{background:linear-gradient(180deg,transparent,#eee8de80 55%,transparent)}
 .research-scientific,.lab-photo-link,.atlas-ai-feature-image{background:transparent;box-shadow:none;border:0}
+.atlas .lab-scene{background:none}.lab-photo-link:is(:hover,:focus-visible)>span{padding:22px 28px}
 .research-scientific{height:560px}.scientific-study{color:#52636e}.scientific-stage{background:none}
 .scientific-study figcaption{color:#657078}.scientific-labels{color:#52636e}.scientific-labels>span{background:transparent}
 .scientific-labels>span::before{background:#52636e60}
@@ -72,11 +73,12 @@ body{background:var(--paper);color:var(--workspace-ink)}
 .atlas .atlas-sample-note{background:#f2e7d8;border:0;border-radius:6px;padding:12px 15px;color:#835d3f;font-size:.75rem;margin:18px 0}
 .atlas .atlas-form-actions{margin-top:32px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .atlas .atlas-form-actions>.atlas-action{flex:1;padding:15px 18px;font-size:.85rem;min-height:52px}.atlas .atlas-reset{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 0;font-size:.76rem}
-.atlas .research-result-panel,.atlas .atlas-result-panel.has-result{position:sticky;top:112px;padding:30px;min-height:0;background:#eaf0ef;border-color:#d5e0de;border-radius:12px;overflow:visible}
+.atlas .research-result-panel,.atlas .atlas-result-panel.has-result{position:sticky;top:112px;padding:30px;min-height:0;background:#eaf0ef;border-color:#d5e0de;border-radius:12px;overflow:visible;scroll-margin-top:112px}
 .research-result-heading{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:30px}
 .research-result-heading h2{font:500 1rem/1.5 var(--font-sans);letter-spacing:-.02em;color:#304b55}
 .research-result-heading>span{font-size:.67rem;color:#72818a;text-align:right;max-width:145px}
 .atlas .atlas-result-context{display:block;font-size:.78rem;color:#617681;line-height:1.6}
+.study-result-top .atlas-result-context{max-width:none}.atlas .study-groups>div{text-align:left}
 .atlas .atlas-result-number{display:flex;align-items:baseline;gap:13px;margin:11px 0 25px;font-family:var(--font-sans);font-size:5.1rem;line-height:1.1;color:#2c454f;letter-spacing:-.06em;font-variant-numeric:tabular-nums}
 .atlas-result-number b{font-weight:500!important}.atlas .atlas-result-number>span:not(.atlas-sr-only){font:400 .9rem/1.5 var(--font-sans);letter-spacing:0;color:#718189}
 .atlas .atlas-result-empty{padding:0;min-height:0}.research-result-preview{height:190px;display:flex;align-items:center;justify-content:center;margin:0 0 25px}
@@ -134,10 +136,13 @@ body{background:var(--paper);color:var(--workspace-ink)}
 .contact-form .research-select-trigger{background:#fffdf9;color:#3c515b;border:1px solid #d5d2ca}.contact-form .research-select-trigger:hover{background:#fffdf9;border-color:#bca284}
 .contact-form :is(input,textarea){min-height:52px;margin-top:9px;background:#fff;border:1px solid #d7d3ca;border-radius:7px;color:#354c57;padding:13px 15px;font:400 .95rem/1.6 var(--font-sans);width:100%;box-shadow:none;outline-offset:3px}.contact-form textarea{resize:vertical}.contact-form :is(input,textarea):focus-visible{outline:2px solid #a16b45}.contact-form label>span,.contact-form>p,.contact-form-privacy{color:#78888e}.contact-form-row{gap:22px}.contact-form .btn{background:#935c39;border:1px solid #935c39;border-radius:6px;color:#fffaf3;min-height:52px;padding:13px 25px}.contact-form .btn:hover{background:#7d4c2f}
 /* Transparent vector loops remain readable if a device cannot create WebGL. */
+.atlas :is(.atlas-lead,.research-input-count,.research-unit,.research-field>small,.research-result-heading>span,.research-result-readiness,.study-dropout-note,.study-curve-title,.study-curve figcaption,.atlas-result-foot,.atlas-interpretation){color:#596c74}
+.atlas .research-form-note{color:#596c74!important}.atlas .research-field>small.research-field-error{color:#9c432d}
+.atlas .research-result-panel .atlas-result-empty>p,.atlas .pheno-comparison :is(span,small){color:#596c74!important}
 @property --molecule-phase{syntax:'<angle>';inherits:true;initial-value:0deg}
 .scientific-stage[data-ready=false] .scientific-plate>g{animation:none}
-.scientific-stage[data-ready=false] .scientific-cell-plate{animation:cell-study-orbit 24s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
-.scientific-stage[data-ready=false] .scientific-molecule-plate{animation:molecule-study-turn 22s linear infinite}
+.scientific-stage[data-ready=false] .scientific-plate>.scientific-cell-plate{animation:cell-study-orbit 24s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.scientific-stage[data-ready=false] .scientific-plate>.scientific-molecule-plate{animation:molecule-study-turn 22s linear infinite}
 .scientific-helix-rung line{transform:scaleX(sin(calc(var(--molecule-phase) + var(--helix-angle))));transform-origin:0 0}
 .scientific-helix-rung .strand-a{transform:translateX(calc(sin(calc(var(--molecule-phase) + var(--helix-angle))) * 104px - var(--helix-origin)));r:calc(7px + cos(calc(var(--molecule-phase) + var(--helix-angle))) * 2px)}
 .scientific-helix-rung .strand-b{transform:translateX(calc(sin(calc(var(--molecule-phase) + var(--helix-angle))) * -104px + var(--helix-origin)));r:calc(7px - cos(calc(var(--molecule-phase) + var(--helix-angle))) * 2px)}
