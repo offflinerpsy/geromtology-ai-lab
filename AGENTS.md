@@ -8,7 +8,7 @@ Run type checks, meaningful tests and the production build before a release. Use
 
 ## Design
 
-Do not add decorative section numbering, numbered-card motifs, invented metrics, gratuitous icons or fake dashboards. Retain the premium editorial composition, purposeful imagery and typography. Preserve the approved WebGL hero, transparent cellular field, GSAP/Three.js laboratory scenes, visible pause controls and reduced-motion behavior. Avoid scroll hijacking. Reading text and essential content must remain available when motion is unavailable.
+Do not add decorative section numbering, numbered-card motifs, invented metrics, gratuitous icons or fake dashboards. Retain the premium editorial composition, purposeful imagery and typography. Preserve the approved home WebGL hero movement. The owner’s 19 October 2026 visual revision replaces the green palette, floating inquiry sprites and photographic laboratory planes with graphite surfaces and structured scientific geometry. Use one global header and footer on every route. Do not reintroduce decorative section labels, up-right link arrows, image hover zooms, link nudges or visible Pause motion switches. New decorative sequences should settle after a brief entrance, pause offscreen and respect reduced motion. Avoid scroll hijacking. Reading text and essential content must remain available when motion is unavailable.
 
 The website is multi-page. Preserve header/footer/mobile paths, keyboard focus, Escape dismissal, deep links, back/forward and existing document-anchor entry to laboratory/tools.
 

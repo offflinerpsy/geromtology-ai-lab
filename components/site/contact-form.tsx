@@ -24,7 +24,7 @@ export default function ContactForm() {
         <label htmlFor="contact-message">Your message<textarea id="contact-message" name="message" required minLength={20} maxLength={5000} rows={6} /></label>
         <div hidden aria-hidden="true"><label htmlFor="contact-website">Website<input id="contact-website" name="website" tabIndex={-1} autoComplete="off" /></label></div>
         <p className="contact-form-privacy">We store these details to review and respond to your enquiry. Read our <a href="/privacy">privacy notice</a>.</p>
-        <button className="btn btn-dark" type="submit">{pending ? 'Saving enquiry…' : 'Submit enquiry'}<span aria-hidden="true">↗</span></button>
+        <button className="btn btn-dark" type="submit">{pending ? 'Saving enquiry…' : 'Submit enquiry'}</button>
       </fieldset>
       <div aria-live="polite" role={error ? 'alert' : 'status'}>{error || (pending ? 'Saving your enquiry…' : '')}</div>
     </>}

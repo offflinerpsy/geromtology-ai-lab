@@ -6,7 +6,7 @@
 .hero-art-live[data-ready="true"] .hero-cellular-canvas {opacity: var(--hero-art-opacity);}
 .hero-art-meta {display: flex;flex-direction: column;align-items: flex-end;gap: 3px;min-height: 67.5px;}
 .hero-animated .hero-bottom {z-index: 2;}
-.hero-motion-control {appearance: none;border: 0;background: transparent;color: #dce2d1;font: inherit;font-size: .875rem;letter-spacing: 0;line-height: 1.5;min-height: 44px;padding: 4px 0;cursor: pointer;position: relative;}
+.hero-motion-control {appearance: none;border: 0;background: transparent;color: #dadad9;font: inherit;font-size: .875rem;letter-spacing: 0;line-height: 1.5;min-height: 44px;padding: 4px 0;cursor: pointer;position: relative;}
 .hero-motion-control[hidden] {display: none;}
 .hero-motion-control::after {content: "";position: absolute;left: 0;right: 0;bottom: 9px;height: 1px;background: currentColor;transform: scaleX(.2);transform-origin: right;opacity: .4;transition: transform .45s, opacity .45s;}
 .hero-motion-control:is(:hover, :focus-visible)::after {transform: scaleX(1);opacity: 1;}

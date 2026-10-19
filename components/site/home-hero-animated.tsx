@@ -1,7 +1,7 @@
 "use client";
 
 import { DocumentLink as Link } from "./research-link";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import type {CellularHeroController} from "@/lib/cellular-hero";
 
 export default function HomeHeroAnimated() {
@@ -9,8 +9,6 @@ export default function HomeHeroAnimated() {
   const imageRef = useRef<HTMLImageElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const controllerRef = useRef<CellularHeroController | null>(null);
-  const [ready, setReady] = useState(false);
-  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     const root = artRef.current;
@@ -26,9 +24,9 @@ export default function HomeHeroAnimated() {
       try {
         const [{mountCellularHero}] = await Promise.all([import("@/lib/cellular-hero"), image.decode()]);
         if (disposed || media.matches) return;
-        controllerRef.current = mountCellularHero(root, image, canvas, value => { if (!disposed) setReady(value); });
+        controllerRef.current = mountCellularHero(root, image, canvas, () => {});
       } catch {
-        if (!disposed) { root.dataset.animationState = "static"; root.dataset.ready = "false"; setReady(false); }
+        if (!disposed) { root.dataset.animationState = "static"; root.dataset.ready = "false"; }
       } finally { loading = false; }
     };
     media.addEventListener("change", initialize);
@@ -41,11 +39,6 @@ export default function HomeHeroAnimated() {
     };
   }, []);
 
-  const toggleMotion = () => {
-    const next = !paused;
-    controllerRef.current?.setPaused(next);
-    setPaused(next);
-  };
 
   return (
     <section className="hero hero-animated" id="top" aria-labelledby="hero-title">
@@ -62,7 +55,7 @@ export default function HomeHeroAnimated() {
       <div className="hero-bottom container">
         <Link href="/institute" className="scroll-link">Discover the institute</Link>
         <span>GERONTOLOGY &nbsp; / &nbsp; HUMAN POTENTIAL</span>
-        <div className="art-label hero-art-meta"><span>Conceptual cellular study</span><button className="hero-motion-control" type="button" hidden={!ready} aria-pressed={paused} onClick={toggleMotion}>{paused ? "Resume motion" : "Pause motion"}</button></div>
+        <div className="art-label hero-art-meta"><span>Conceptual cellular study</span></div>
       </div>
     </section>
   );

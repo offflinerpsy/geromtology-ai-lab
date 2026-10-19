@@ -13,11 +13,11 @@
 .inquiry-caption {position: absolute;inset: auto 0 0;display: flex;justify-content: space-between;align-items: end;gap: 28px;}
 .inquiry-caption > p {font-family: var(--font-editorial);font-size: 1.5rem;line-height: 1.3;letter-spacing: -.02em;}
 .inquiry-caption > div {display: flex;flex-direction: column;align-items: end;gap: 4px;min-height: 73px;}
-.inquiry-caption span {font-size: .8125rem;line-height: 1.5;color: #65715e;white-space: nowrap;}
-.inquiry-motion-control {pointer-events: auto;min-height: 44px;padding: 10px 0;border: 0;background: transparent;font: inherit;font-size: .875rem;color: #52614a;cursor: pointer;text-decoration: underline;text-decoration-color: transparent;text-underline-offset: 6px;transition: color .4s, text-decoration-color .4s;}
+.inquiry-caption span {font-size: .8125rem;line-height: 1.5;color: #6a6865;white-space: nowrap;}
+.inquiry-motion-control {pointer-events: auto;min-height: 44px;padding: 10px 0;border: 0;background: transparent;font: inherit;font-size: .875rem;color: #575654;cursor: pointer;text-decoration: underline;text-decoration-color: transparent;text-underline-offset: 6px;transition: color .4s, text-decoration-color .4s;}
 .inquiry-motion-control[hidden] {display: none;}
 .inquiry-motion-control:hover {color: var(--foreground);text-decoration-color: currentColor;}
-.inquiry-motion-control:focus-visible {outline: 2px solid #829642;outline-offset: 5px;}
+.inquiry-motion-control:focus-visible {outline: 2px solid #6e6c6a;outline-offset: 5px;}
 @media (max-width: 1000px) {
   .research-living .inquiry-space {height: 570px;}
   .inquiry-art {inset: -75px -25px auto;height: 750px;}
