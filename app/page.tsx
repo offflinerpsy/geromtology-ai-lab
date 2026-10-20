@@ -3,7 +3,6 @@ export const metadata = pageMetadata('ProAge Atlas — Research for healthy agin
 import Link from "@/components/site/research-link";
 import HomeHeroAnimated from "@/components/site/home-hero-animated";
 import ScientificScene from "@/components/science/scientific-scene";
-import WorkflowVisual from "@/components/science/workflow-visual";
 import InquiryCellularArt from "@/components/site/inquiry-cellular-art";
 
 
@@ -12,7 +11,7 @@ export default function Home(){return <>
       <HomeHeroAnimated />
       <section className="institute section-light" id="platform">
         <div className="container intro-grid"><div><h2 className="statement reveal">From a question<br />to the next study.</h2><div className="intro-columns reveal"><p>Start with a research question. Find selected evidence, compare what a method measures and explore the design of the next study.</p><p>ProAge Atlas brings working research tools into one place. We are developing the connections between them so teams can prepare material they can inspect, export and review.</p></div></div></div>
-        <div className="container workflow-collection"><Link href="/laboratory/evidence"><WorkflowVisual kind="evidence"/><h3>Organize evidence</h3><p>Find a useful source set for a focused research question.</p></Link><Link href="/laboratory/biomarkers"><WorkflowVisual kind="biomarkers"/><h3>Compare methods</h3><p>Connect the measurement with its inputs, population and outcome.</p></Link><Link href="/tools/study-planner"><WorkflowVisual kind="power"/><h3>Plan the next study</h3><p>Explore power, recruitment and explicit design assumptions.</p></Link></div>
+        <div className="container workflow-collection"><Link href="/laboratory/evidence"><h3>Organize evidence</h3><p>Find a useful source set for a focused research question.</p></Link><Link href="/laboratory/biomarkers"><h3>Compare methods</h3><p>Connect the measurement with its inputs, population and outcome.</p></Link><Link href="/tools/study-planner"><h3>Plan the next study</h3><p>Explore power, recruitment and explicit design assumptions.</p></Link></div>
       </section>
       <section className="research section-light research-living" id="research">
         <div className="container"><div className="section-heading reveal"><h2>Research across<br /><span className="muted">the life course.</span></h2></div>

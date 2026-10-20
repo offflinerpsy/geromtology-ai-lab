@@ -55,7 +55,7 @@ export default function HomeHeroAnimated() {
       <div className="hero-bottom container">
         <Link href="/institute" className="scroll-link">Discover the institute</Link>
         <span>GERONTOLOGY &nbsp; / &nbsp; HUMAN POTENTIAL</span>
-        <div className="art-label hero-art-meta"><span>Conceptual cellular study</span></div>
+
       </div>
     </section>
   );

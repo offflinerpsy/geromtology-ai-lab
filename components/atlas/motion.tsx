@@ -2,7 +2,6 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import WorkflowVisual from '@/components/science/workflow-visual';
 import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
 gsap.registerPlugin(ScrollTrigger,MorphSVGPlugin);
 
@@ -41,7 +40,4 @@ export function MorphPath({d,...props}:{d:string;fill?:string;stroke?:string;str
     if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){element.setAttribute('d',d);return;}
     const tween=gsap.to(element,{morphSVG:{shape:d,shapeIndex:0},duration:.75,ease:'power2.out'});return()=>{tween.kill();};
   },[d]);return <path ref={node} d={first.current} {...props}/>;
-}
-export function ModelSignal({completion=10}:{completion?:number}) {
-  return <div className="model-signal" aria-hidden="true"><WorkflowVisual kind="biomarkers" completion={completion}/></div>;
 }

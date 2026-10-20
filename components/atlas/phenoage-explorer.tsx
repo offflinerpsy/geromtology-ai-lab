@@ -4,8 +4,8 @@ import { gsap } from 'gsap';
 import { Download, RotateCcw } from 'lucide-react';
 import { biomarkerFields, sampleBiomarkers, convertUnits, calculatePhenoAge, validateBiomarkers, type BiomarkerKey, type BiomarkerValues, type UnitSystem } from '@/lib/phenoage';
 import { downloadJSON } from './export';
-import { AnimatedNumber, ModelSignal } from './motion';
-import { ResearchNumber } from '@/components/ui/research-controls';
+import { AnimatedNumber } from './motion';
+import { ResearchNumber, ResearchSegment } from '@/components/ui/research-controls';
 import { numericInput } from '@/lib/numeric-input';
 type Result=ReturnType<typeof calculatePhenoAge>;
 const empty=()=>Object.fromEntries(biomarkerFields.map(f=>[f.key,''])) as Record<BiomarkerKey,string>;
@@ -23,6 +23,7 @@ export default function PhenoAgeExplorer() {
       unit={units === 'si' ? item.si : item.conventional} detail={item.detail}
       value={fields[key]} error={errors[key]} onChange={value => {
         setFields(previous => ({...previous, [key]: value})); setResult(null);
+        if (sample) setSample(false);
         if (errors[key]) setErrors(previous => ({...previous, [key]: undefined}));
       }}/>;
   };
@@ -33,16 +34,13 @@ export default function PhenoAgeExplorer() {
   ];
   return <div className="atlas-workbench pheno-workbench">
     <form className="atlas-panel atlas-input-panel research-input-panel" onSubmit={calculate} noValidate>
-      <div className="atlas-panel-heading"><h2>Enter a blood panel</h2><span className="research-input-count">{complete} of 10 entered</span></div>
+      <div className="atlas-panel-heading"><h2>Blood biomarkers</h2><span className="research-input-count">{complete} of 10 entered</span></div>
       <div className="research-progress" role="progressbar" aria-label="Blood panel input completion" aria-valuemin={0} aria-valuemax={10} aria-valuenow={complete}><span style={{width: `${complete * 10}%`}}/></div>
       <div className="atlas-form-toolbar">
-        <div className="atlas-segment" role="group" aria-label="Laboratory unit system">
-          <button type="button" aria-pressed={units === 'si'} onClick={() => changeUnits('si')}>SI units</button>
-          <button type="button" aria-pressed={units === 'conventional'} onClick={() => changeUnits('conventional')}>Conventional</button>
-        </div>
+        <ResearchSegment label="Laboratory unit system" value={units} onValueChange={next=>changeUnits(next as UnitSystem)} options={[{value:'si',label:'SI units'},{value:'conventional',label:'Conventional'}]}/>
         <button type="button" className="research-example-button" onClick={sampleData}>Use example data</button>
       </div>
-      <p className="research-form-note" id="pheno-units-note">Units appear inside each field; switching units converts your values. Use a dot or comma for decimals, without thousands separators.</p>
+      <p className="research-form-note" id="pheno-units-note">Switching units converts your values. Dot or comma decimals; no thousands separators.</p>
       {sample && <p className="atlas-sample-note">Synthetic example loaded. Reset to start with an independent dataset.</p>}
       {Object.values(errors).some(Boolean) && <p className="atlas-error atlas-validation-summary" role="alert">Check the highlighted inputs and their units. All ten values are required.</p>}
       <div aria-describedby="pheno-units-note">{groups.map(group => <fieldset className="research-field-group" key={group.title}>
@@ -76,10 +74,10 @@ export default function PhenoAgeExplorer() {
           source: 'https://doi.org/10.18632/aging.101414', purpose: 'Research and education; not a diagnosis or pace-of-aging measure'
         })}><Download size={16}/>Export calculation</button>
       </> : <div className="atlas-result-empty">
-        <div className="research-result-preview"><ModelSignal completion={complete}/></div>
-        <h3>A clear view of the model.</h3>
-        <p>Enter all ten inputs or load the synthetic example. Your estimate, age comparison and calculation details will appear here.</p>
-        <div className="research-result-readiness"><span>{complete} of 10 inputs entered</span><span>{10 - complete} remaining</span></div>
+        <div className="result-placeholder-number" aria-hidden="true">—<span>years</span></div>
+        <h3>Your panel. In perspective.</h3>
+        <p>Enter all ten inputs or load the synthetic example. Compare the model estimate with chronological age and inspect every coefficient.</p>
+        <div className="research-result-readiness"><span>{complete} of 10 inputs entered</span><div className="readiness-ticks" aria-hidden="true">{Array.from({length:10},(_,i)=><i key={i} data-complete={i<complete}/>)}</div></div>
       </div>}
       <div className="atlas-result-foot"><span>Published clinical model</span><span>Research & education</span></div>
     </section>

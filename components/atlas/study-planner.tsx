@@ -1,10 +1,10 @@
 "use client";
-import { useMemo, useState, type CSSProperties } from 'react';
+import { useMemo, useState } from 'react';
 import { Download } from 'lucide-react';
 import { planStudy, studyPower, validateStudy, type StudyInputs } from '@/lib/study-planner';
 import { downloadJSON } from './export';
 import { AnimatedNumber, MorphPath } from './motion';
-import { ResearchNumber } from '@/components/ui/research-controls';
+import { ResearchNumber, ResearchSlider } from '@/components/ui/research-controls';
 import { numericInput } from '@/lib/numeric-input';
 const initial={difference:'5',sd:'10',alpha:'0.05',power:'80',ratio:'1',dropout:'15'};
 export default function StudyPlanner() {
@@ -22,7 +22,7 @@ export default function StudyPlanner() {
         <NumericField id="sd" label="Common standard deviation" unit="same units" value={fields.sd} onChange={s=>set('sd',s)} detail="Use a defensible prior estimate"/>
       </div>
       <div className="study-effect"><span>Standardized effect · Cohen’s d</span><strong>{v.sd>0&&v.difference>0?(v.difference/v.sd).toFixed(2):'—'}</strong></div>
-      <div className="study-slider"><label htmlFor="study-power">Target statistical power <strong>{fields.power}%</strong></label><input type="range" className="research-range" style={{'--range-fill': `${(numericInput(fields.power)-50)/49*100}%`} as CSSProperties} id="study-power" min="50" max="99" value={fields.power} onChange={e=>set('power',e.target.value)}/><div><span>50%</span><span>99%</span></div></div>
+      <div className="study-slider"><label htmlFor="study-power">Target statistical power <strong>{fields.power}%</strong></label><ResearchSlider id="study-power" label="Target statistical power" min={50} max={99} value={numericInput(fields.power)} valueText={`${fields.power} percent`} onValueChange={value=>set('power',String(value))}/><div><span>50%</span><span>99%</span></div></div>
       <div className="atlas-fields study-statistics">
         <NumericField id="alpha" label="Significance level" unit="α" value={fields.alpha} onChange={s=>set('alpha',s)} detail="0.001–0.10; two-sided"/>
         <NumericField id="ratio" label="Allocation B : A" unit="ratio" value={fields.ratio} onChange={s=>set('ratio',s)} detail="1 is equal group allocation"/>
@@ -64,5 +64,5 @@ function PowerCurve({points,planned,plannedPower,target}:{points:{n:number;power
     <line x1={left} x2={width-right} y1={y(target)} y2={y(target)} stroke="var(--workspace-ink)" strokeDasharray="4 5" opacity=".7"/><line x1={x(planned)} x2={x(planned)} y1={top} y2={y(0)} stroke="var(--workspace-ink)" opacity=".4"/>
     <circle cx={x(hover.n)} cy={y(hover.power)} r="5" fill="var(--workspace-accent)"/>
     {[min,Math.round((min+max)/2),max].map(n=><text key={n} x={x(n)} y={height-10} textAnchor="middle">{n}</text>)}
-  </svg><label className="atlas-sr-only" htmlFor="power-curve-explore">Explore power at different sample sizes</label><input type="range" className="research-range" style={{'--range-fill': `${selected/(samples.length-1)*100}%`} as CSSProperties} id="power-curve-explore" min="0" max={samples.length-1} value={selected} aria-valuetext={`${hover.n} evaluable in group A, ${(hover.power*100).toFixed(1)} percent power, ${alternative?'alternative sample':'recommended sample'}`} onChange={e=>setPosition(Number(e.target.value))}/><figcaption>Evaluable participants in group A · allocation held constant. {alternative?'Exploring an alternative; recruitment totals above remain the recommended design.':'Marker matches the recommended design. Drag to explore alternatives.'}</figcaption>{alternative&&<button type="button" className="atlas-quiet" onClick={()=>setPosition(null)}>Return to recommended sample</button>}</figure>;
+  </svg><label className="atlas-sr-only" htmlFor="power-curve-explore">Explore power at different sample sizes</label><ResearchSlider id="power-curve-explore" label="Explore power at different sample sizes" min={0} max={samples.length-1} value={selected} valueText={`${hover.n} evaluable in group A, ${(hover.power*100).toFixed(1)} percent power, ${alternative?'alternative sample':'recommended sample'}`} onValueChange={value=>setPosition(value)}/><figcaption>Evaluable participants in group A · allocation held constant. {alternative?'Exploring an alternative; recruitment totals above remain the recommended design.':'Marker matches the recommended design. Drag to explore alternatives.'}</figcaption>{alternative&&<button type="button" className="atlas-quiet" onClick={()=>setPosition(null)}>Return to recommended sample</button>}</figure>;
 }
