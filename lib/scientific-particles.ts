@@ -12,8 +12,8 @@ export function scientificParticles(variant: ParticleVariant): Particle[] {
     }
   };
   if(variant==='cell') {
-    sphere(2900,1.77,0,0,0,1,1.04,.91,0,.27,.035);
-    sphere(1700,.66,-.15,.02,.1,1.08,.95,1,1,.82,.1);
+    sphere(2900,1.77,0,0,0,1,1.04,.91,0,.48,.035);
+    sphere(1700,.66,-.15,.02,.1,1.08,.95,1,1,.9,.1);
     sphere(400,.24,-.32,.13,.48,1,1,1,2,.86,.08);
     // Folded reticular lamellae encircle the nucleus.
     for(let band=0;band<7;band++) for(let i=0;i<180;i++) {
@@ -61,6 +61,16 @@ export function mountCanvasScience(element:HTMLElement,canvas:HTMLCanvasElement,
   const draw=()=>{
     context.setTransform(ratio,0,0,ratio,0,0);context.clearRect(0,0,width,height);
     const scale=Math.min(width/(variant==='cell'?4.2:3.4),height/4.8);
+    if(variant==='cell') {
+      const radius=scale*1.79;
+      const glass=context.createRadialGradient(width/2-radius*.3,height/2-radius*.35,radius*.15,width/2,height/2,radius);
+      glass.addColorStop(0,'rgba(89,148,115,0)');glass.addColorStop(.76,'rgba(101,157,127,.015)');glass.addColorStop(.92,'rgba(73,133,102,.08)');glass.addColorStop(1,'rgba(73,133,102,0)');
+      context.fillStyle=glass;context.beginPath();context.ellipse(width/2,height/2,radius,radius*1.04,0,0,Math.PI*2);context.fill();
+      const core=projectParticle({x:-.15,y:.02,z:.1,size:1,tone:1,alpha:1},phase,variant,px,py),cx=width/2+core.x*scale,cy=height/2-core.y*scale,cr=scale*.67;
+      const volume=context.createRadialGradient(cx-cr*.4,cy-cr*.4,0,cx,cy,cr);
+      volume.addColorStop(0,'rgba(119,178,145,.15)');volume.addColorStop(.55,'rgba(37,104,79,.12)');volume.addColorStop(1,'rgba(22,83,62,.02)');
+      context.fillStyle=volume;context.beginPath();context.arc(cx,cy,cr,0,Math.PI*2);context.fill();
+    }
     const projected=points.map(p=>({p,...projectParticle(p,phase,variant,px,py)}));
     projected.sort((a,b)=>a.z-b.z);
     for(const point of projected) {

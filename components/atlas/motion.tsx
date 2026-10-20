@@ -19,19 +19,8 @@ export function AtlasMotion(){
   },[]);return <span ref={marker} hidden/>;
 }
 export function AnimatedNumber({value,decimals=0,grouped=false}:{value:number;decimals?:number;grouped?:boolean}){
-  const element=useRef<HTMLElement>(null);
-  const previous=useRef(0);
-  const format=(number:number)=>number.toLocaleString('en-US',{minimumFractionDigits:decimals,maximumFractionDigits:decimals,useGrouping:grouped});
-  const formatted=format(value);
-  useEffect(()=>{
-    const node=element.current;
-    if(!node)return;
-    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){node.textContent=formatted;previous.current=value;return;}
-    const state={number:previous.current};
-    const tween=gsap.to(state,{number:value,duration:.7,ease:'power2.out',onUpdate:()=>{previous.current=state.number;node.textContent=format(state.number);}});
-    return()=>{tween.kill();};
-  },[value,decimals,grouped]);
-  return <><b className="atlas-animated-number" ref={element} aria-hidden="true">{formatted}</b><span className="atlas-sr-only">{formatted}</span></>;
+  const formatted=value.toLocaleString('en-US',{minimumFractionDigits:decimals,maximumFractionDigits:decimals,useGrouping:grouped});
+  return <b className="atlas-animated-number">{formatted}</b>;
 }
 
 export function MorphPath({d,...props}:{d:string;fill?:string;stroke?:string;strokeWidth?:string;opacity?:string;className?:string}){
