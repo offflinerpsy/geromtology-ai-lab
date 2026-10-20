@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
@@ -24,9 +24,9 @@ export function AnimatedNumber({value,decimals=0,grouped=false}:{value:number;de
 }
 
 export function MorphPath({d,...props}:{d:string;fill?:string;stroke?:string;strokeWidth?:string;opacity?:string;className?:string}){
-  const node=useRef<SVGPathElement>(null);const first=useRef(d);
+  const node=useRef<SVGPathElement>(null);const [first]=useState(d);
   useEffect(()=>{if(!node.current)return;const element=node.current;
     if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){element.setAttribute('d',d);return;}
     const tween=gsap.to(element,{morphSVG:{shape:d,shapeIndex:0},duration:.75,ease:'power2.out'});return()=>{tween.kill();};
-  },[d]);return <path ref={node} d={first.current} {...props}/>;
+  },[d]);return <path ref={node} d={first} {...props}/>;
 }
