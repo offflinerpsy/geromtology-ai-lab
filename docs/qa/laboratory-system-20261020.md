@@ -34,3 +34,14 @@ Visual references were inspected directly: Isomorphic Labs and Chai Discovery. C
 ## Release boundary
 
 This pass changes presentation and local calculator control behavior. Scientific formulas, API handlers, authentication, form submission checks, email routing, database bindings and dependency versions were not edited. Production must fast-forward from `fd013ada6ac8f65369c8dbad329a82f786947183`, with a rollback branch retaining that commit. The isolated visual review worker has no production database, routes, email bindings or secrets and is removed after release verification.
+
+## Production receipt
+
+- Released commit: `5393a879718a5440d17197ce0c47fa6a70a0db0e`.
+- Successful Cloudflare build: `8e76f882-752f-4e01-8852-0558001bc3f8`.
+- Production deployment: `b0d39042-38ed-4ac2-8327-1160b428bffe`, version `1c6149e8-a552-46ee-ae8d-c5e1a1dff98e`, 100% traffic, 20 October 2026 12:02 UTC.
+- Rollback branch: `backup/before-laboratory-system-20261020`.
+- Rechecked the PhenoAge synthetic result (41.8), global dropdown and navigation to the laboratory on gerontology.app. No application errors appeared in the inspected production browser log.
+- Evidence Library search for PhenoAge combined with Original research returned 4 of 14 sources. Its mobile document had no horizontal overflow.
+- Verified final mobile navigation group headings use the dark ink color on the light surface.
+- Production screenshots: `phenoage-production-20261020.jpg`, `laboratory-production-20261020.jpg`.
