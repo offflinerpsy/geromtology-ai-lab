@@ -32,7 +32,7 @@ Azure URL/deployment and Access organization/audiences are non-secret runtime co
 
 ## Access
 
-`/auth/login` is protected by Cloudflare Access email verification. The Worker verifies the session JWT signature, issuer, audience and expiry, and redirects only to a relative URL. Public source discovery does not require sign-in; AI synthesis requires a verified session.
+`/auth/login` is protected by Cloudflare Access email verification. The Worker verifies the session JWT signature, issuer, audience and expiry, and redirects only to a relative URL. Browsing the curated evidence library does not require sign-in. AI scope classification, live literature retrieval and synthesis require a verified session. The endpoint enforces exact same-origin requests, bounded input, six requests per minute and forty per UTC day per user, plus a site-wide ceiling of three hundred per UTC day. These are prototype allowances, not a paid service plan. Rate-limit counters use the existing contact_rate_limits table; no migration is required.
 
 `/manage/*` has a separate owner-email Access policy. The inbox also checks the signed identity against its secret owner setting. Public pages never reveal enquiry records.
 
