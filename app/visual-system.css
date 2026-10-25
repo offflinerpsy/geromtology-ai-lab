@@ -102,6 +102,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
 
 /* A short navigation and a single, consistent set of starting points. */
 .primary-navigation{display:flex;align-items:center;gap:4px;margin-left:auto}
+@media(min-width:960px){.shared-header .mobile-menu-trigger{display:none}.shared-header>.header-contact{display:flex}}
 .primary-navigation>a{display:flex;align-items:center;min-height:44px;padding:10px 13px;border-radius:7px;font-size:.84rem;color:var(--text-secondary);white-space:nowrap}
 .primary-navigation>a:is(:hover,:focus-visible,[aria-current=page]){background:var(--surface-subtle);color:var(--ink)}
 .simple-mobile-navigation{display:flex;flex-direction:column;gap:6px;margin-top:30px}

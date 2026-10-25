@@ -15,7 +15,8 @@ ProAge Atlas is an independent research software initiative for small geroscienc
 | Evidence library | Search selected references; filter by field, date and document type | A bounded curated collection, not a live literature search |
 | PhenoAge Explorer | Calculate the published clinical biomarker model; inspect terms and export units/version | Clinical PhenoAge, not a DNA-methylation assay or a pace-of-aging estimate |
 | Study Planner | Explore two-group sample size, noncentral-t power, allocation and dropout | Independent observations, normally distributed outcomes and pooled variance |
-| Evidence Copilot | Search PubMed-indexed abstracts via Europe PMC or selected Atlas notes; ask follow-ups and export a cited brief | Abstracts/notes only; not a systematic review. Email verification, topic checks and durable request limits |
+| Evidence Copilot | Search PubMed-indexed abstracts via Europe PMC or selected Atlas notes; ask follow-ups and export a cited brief | Abstracts/notes only; not a systematic review. Public access without an account; topic checks and durable request limits |
+| Health check-ins | Eleven English questionnaires, one question at a time, with local summary export | GAD-7, PHQ-9 and SARC-F use published scoring; eight reflections are unscored. Answers stay in browser memory |
 | Enquiries | Submit research, pilot and investment enquiries | Stored in a private D1 inbox; owner notifications through Cloudflare Email Service |
 
 The site clearly separates ProAge Atlas product development from the Open Institute of Age and Aging's scientific and educational context. It does not claim clinical validation, customers, funding or completed commercial pilots. Saved research packages and team collaboration are on the roadmap.
@@ -36,7 +37,7 @@ Use Node.js **22.19 or later** and the pinned pnpm version in `package.json`. No
 
 ## Architecture
 
-The application uses React 19, the Next.js App Router API and vinext/Vite, deployed as a Cloudflare Worker with static assets. Cloudflare D1 persists enquiries; Cloudflare Access verifies AI users and protects the owner's inbox. The Azure Responses API runs only on the server. Calculator inputs remain in the browser.
+The application uses React 19, the Next.js App Router API and vinext/Vite, deployed as a Cloudflare Worker with static assets. Cloudflare D1 persists enquiries; Cloudflare Access protects the owner's inbox; the public AI assistant does not require sign-in. The Azure Responses API runs only on the server. Calculator inputs and health check-in answers remain in the browser.
 
 ```mermaid
 flowchart TD
@@ -58,7 +59,7 @@ pnpm test
 pnpm build
 ```
 
-The tests cover independent PhenoAge and SciPy power fixtures, unit conversion, source classification, citation validation, retrieval normalization, scope/failure boundaries, bounded input and signed Access-token checks. A passing build does not establish browser accessibility, visual quality, animation frame rate or clinical validity. Inspect desktop/mobile layouts and real interactions before accepting UI changes.
+The tests cover independent PhenoAge and SciPy power fixtures, unit conversion, source classification, citation validation, retrieval normalization, scope/failure boundaries, bounded input, signed inbox Access-token checks, anonymous request limits and all check-in score boundaries. A passing build does not establish browser accessibility, visual quality, animation frame rate or clinical validity. Inspect desktop/mobile layouts and real interactions before accepting UI changes.
 
 The AI product decision and current limitations are recorded in [AI product direction](docs/product/ai-product-decision-20261025.md).
 

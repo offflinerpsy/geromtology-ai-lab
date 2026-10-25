@@ -10,7 +10,7 @@
 | Fallback URL | https://proage-atlas.offflinerpsy.workers.dev |
 | Email | Cloudflare Email Routing and Email Sending |
 | Database | Cloudflare D1, `proage-atlas`, binding `DB` |
-| Authentication | Cloudflare Access, verified-email research login and a separate owner-only inbox policy |
+| Authentication | Cloudflare Access for the owner-only inbox; public research chat requires no account |
 | AI provider | Existing Azure Responses endpoint and deployment, server-only secret |
 
 The legacy `main` branch retains its earlier Vercel integration. Start product changes from `cloudflare/production`; its pushes trigger production checks, builds and deployment in Cloudflare.
@@ -32,7 +32,11 @@ Azure URL/deployment and Access organization/audiences are non-secret runtime co
 
 ## Access
 
-`/auth/login` is protected by Cloudflare Access email verification. The Worker verifies the session JWT signature, issuer, audience and expiry, and redirects only to a relative URL. Browsing the curated evidence library does not require sign-in. AI scope classification, live literature retrieval and synthesis require a verified session. The endpoint enforces exact same-origin requests, bounded input, six requests per minute and forty per UTC day per user, plus a site-wide ceiling of three hundred per UTC day. These are prototype allowances, not a paid service plan. Rate-limit counters use the existing contact_rate_limits table; no migration is required.
+The public `/api/evidence` endpoint does not require an account or an Access cookie. The chat opens directly at `/laboratory/ask`. The older `/auth/login` route remains protected but is no longer linked from public chat. Private inbox authentication is unchanged.
+
+Public requests must have the exact same origin, JSON content and bounded input. The endpoint derives a daily HMAC identifier from Cloudflare's trusted client IP (IPv6 grouped by /64); raw addresses and questions are not stored in rate-limit records. Limits are three requests per minute, twenty per UTC day per network and three hundred per UTC day for the site. Shared networks share an allowance. Atomic D1 updates enforce limits across requests and Worker instances. Expired counters are cleaned on later traffic. These are prototype allowances, not a paid service plan. Existing `contact_rate_limits` storage is reused; no migration is required. Missing AI configuration, D1, trusted edge context or quota write success fails closed.
+
+The eleven health check-ins run locally in browser memory. They do not send answers to the AI or an application endpoint and do not use cookies or local storage. Navigating away or reloading clears answers. The visitor can explicitly download a Markdown summary.
 
 `/manage/*` has a separate owner-email Access policy. The inbox also checks the signed identity against its secret owner setting. Public pages never reveal enquiry records.
 
@@ -46,7 +50,7 @@ Legacy backup: `backup/before-cloudflare-migration-20261011` at `000dce2050389f8
 
 ## Release checks and limits
 
-Run typecheck, numerical/security tests and build. After deployment check route status, canonicals, sitemap/robots, contact persistence, anonymous AI denial and Access protection. Browser interactions, responsive layouts, signed-in AI answers and FPS need actual browser QA; HTTP responses are not click tests. The supported managed browser was unavailable during migration. Enquiries are stored in the private inbox first, then the Worker sends an owner notification. Email delivery failure is logged with the enquiry reference and does not discard the saved enquiry or invite duplicate submissions.
+Run typecheck, numerical/security tests and build. After deployment check route status, canonicals, sitemap/robots, contact persistence, anonymous AI answers with cited sources and owner-inbox Access protection. Browser interactions, responsive layouts, follow-ups and downloads need actual browser QA; HTTP responses are not click tests. Do not infer animation frame rate from screenshots. Enquiries are stored in the private inbox first, then the Worker sends an owner notification. Email delivery failure is logged with the enquiry reference and does not discard the saved enquiry or invite duplicate submissions.
 
 ## Domain and email
 
