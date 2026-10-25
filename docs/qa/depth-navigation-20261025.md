@@ -20,6 +20,14 @@ Recovery branch: `backup/approved-before-depth-polish-20261025`, commit `e90b8ed
 - TypeScript passed.
 - Existing 53 numerical, questionnaire, request-boundary and AI tests passed.
 - Production build passed.
-- Browser QA: pending preview verification below.
+- Browser QA used the isolated Cloudflare preview and the supported cloud browser. The local browser extension was occupied by its UI, so no local-session claims are made.
+- Check-in collection: 360, 390, 430, 768, 959, 960, 1000, 1001, 1440 and 1920 CSS-pixel widths; zero horizontal overflow and correct mobile/desktop navigation switch. Vertical browser scrollbars account for 15px less content width.
+- Home: complete top-to-bottom review of hero, start paths, cellular context, dark evidence-flow section and footer. Original hero composition retained. Desktop mega panels open; ArrowDown enters links; Escape returns focus. Menu transitions use Radix's accessible primitive (Context7 documentation checked).
+- Mobile: health collection, PhenoAge fields and AI composer inspected at 390px. Mobile Sheet opens, expandable groups work, Escape restores focus. The review harness initially hid the top of its iframe behind its own toolbar; its scale now fits both dimensions. This was a harness issue, not a production menu defect.
+- Motion: evidence-flow phase advanced while visible, then remained 0.97 across reads when paused offscreen. Both tool diagrams reported reduced mode and phase 0.00 across reads using the review-only matchMedia branch shim. This checks the production reduced-motion branch, not an operating-system settings change. No FPS claim.
+- No JavaScript: descriptions and process labels remain server-rendered; navigation links and static fallback remain. A newly detected 390px overlap was corrected by placing fallback navigation in normal document flow; final recheck pending.
+- Independent reviewer checked the source and preview: 390px cinematic AI evaluation title, mobile Sheet/disclosures/Escape, 768px tool typography and motion. Reported title clipping was fixed; no release blockers remained. A 15px diagram alignment difference at tablet width was corrected in the final polish.
+- No application errors observed in the checked page console; browser-extension metadata errors are unrelated. Preview AI intentionally has no provider binding and reports unavailable; production anonymous readiness will be checked after release.
+- Not performed: exhaustive every-route/every-width sweep, formal performance benchmark or OS-level motion preference change.
 
 The isolated visual review worker has no production routes, database, mail or AI secrets. Its review-only wrapper supports fixed-width iframes, no-JavaScript mode and a reduced-motion branch check. The wrapper is never used by the production build.
