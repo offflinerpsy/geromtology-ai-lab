@@ -1,19 +1,17 @@
 "use client";
-import Link from "./research-link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { Menu } from "lucide-react";
-import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink } from "@/components/ui/navigation-menu";
-import { Sheet, SheetContent, SheetTitle, SheetDescription, SheetTrigger } from "@/components/ui/sheet";
-const groups = [
- {name:"Platform",href:"/laboratory",intro:"AI evidence briefs, aging measurements and study planning for research teams.",links:[["Explore the prototype","/laboratory","Start with a research question"],["Research instruments","/tools","PhenoAge and statistical study planning"],["Evidence Copilot","/laboratory/ask","Search literature and ask follow-ups"],["Evidence library","/laboratory/evidence","Studies, reviews, guidance and methods"],["Measurement methods","/laboratory/biomarkers","Compare what each method measures"]]},
- {name:"Research",href:"/research",intro:"The scientific context of healthy aging: biological signals, measurement and human function.",links:[["Research programs","/research","Explore the fields of inquiry"],["The institute","/institute","Scientific and educational context"],["People","/people","Distinct scientific and engineering roles"],["Education & projects","/projects","Institutional initiatives"],["AI evaluation","/laboratory/ai-evaluation","How we assess research assistance"]]},
-];
+import Link from './research-link';
+import {usePathname} from 'next/navigation';
+import {useState} from 'react';
+import {Menu} from 'lucide-react';
+import {Sheet,SheetContent,SheetTitle,SheetDescription,SheetTrigger} from '@/components/ui/sheet';
+const links=[['Health check-ins','/tools/check-ins'],['Research tools','/tools'],['Evidence','/laboratory/evidence'],['About','/about']];
 export default function Header(){
- const pathname=usePathname();const [open,setOpen]=useState(false);const [active,setActive]=useState("");
- return <header className="site-header shared-header"><Link className="wordmark" href="/" onClick={()=>setActive("")} aria-label="ProAge Atlas home"><span className="brand-symbol" aria-hidden="true">a</span><span>ProAge <em>Atlas</em><small>Research for healthy aging</small></span></Link>
- <NavigationMenu className="main-navigation" viewport={false} value={active} onValueChange={setActive} aria-label="Main navigation"><NavigationMenuList>{groups.map(group=><NavigationMenuItem key={group.href}><NavigationMenuTrigger className="nav-trigger" data-current={pathname.startsWith(group.href)||(group.href==="/laboratory"&&pathname.startsWith("/tools"))}>{group.name}</NavigationMenuTrigger><NavigationMenuContent className="mega-menu"><div className="mega-links">{group.links.map(([label,href,description])=><NavigationMenuLink key={href} asChild active={pathname===href}><Link href={href} onClick={()=>setActive("")}><span>{label}</span><small>{description}</small></Link></NavigationMenuLink>)}</div></NavigationMenuContent></NavigationMenuItem>)}<NavigationMenuItem><NavigationMenuLink asChild className="nav-direct"><Link href="/about" aria-current={pathname==='/about'?'page':undefined}>About</Link></NavigationMenuLink></NavigationMenuItem><NavigationMenuItem><NavigationMenuLink asChild className="nav-direct"><Link href="/investors" aria-current={pathname==='/investors'?'page':undefined}>Investors</Link></NavigationMenuLink></NavigationMenuItem></NavigationMenuList></NavigationMenu>
- <Link className="header-contact header-laboratory" href="/laboratory" aria-current={pathname==='/laboratory'?'page':undefined}>Open laboratory</Link>
- <Sheet open={open} onOpenChange={setOpen}><SheetTrigger className="mobile-menu-trigger" aria-label="Open navigation"><span>Menu</span><Menu size={20}/></SheetTrigger><SheetContent className="mobile-sheet" side="right"><SheetTitle className="mobile-sheet-title">Explore ProAge Atlas</SheetTitle><SheetDescription className="sr-only">Platform, research, about, investors and contact.</SheetDescription><nav aria-label="Mobile navigation">{groups.map(group=><div className="mobile-group" key={group.href}><Link href={group.href} onClick={()=>setOpen(false)}>{group.name}</Link>{group.links.map(([label,href])=><Link className="mobile-child" key={href} href={href} onClick={()=>setOpen(false)} aria-current={pathname===href?'page':undefined}>{label}</Link>)}</div>)}<Link className="mobile-standalone" href="/about" onClick={()=>setOpen(false)}>About ProAge Atlas</Link><Link className="mobile-standalone" href="/investors" onClick={()=>setOpen(false)}>Investors</Link><Link className="mobile-standalone" href="/roadmap" onClick={()=>setOpen(false)}>Roadmap</Link><Link className="mobile-standalone" href="/contact" onClick={()=>setOpen(false)}>Contact</Link></nav></SheetContent></Sheet>
- </header>
+  const pathname=usePathname();const [open,setOpen]=useState(false);
+  const current=(href:string)=>href==='/tools'?pathname.startsWith('/tools')&&!pathname.startsWith('/tools/check-ins'):pathname===href||pathname.startsWith(href+'/');
+  return <header className="site-header shared-header">
+    <Link className="wordmark" href="/" aria-label="ProAge Atlas home"><span className="brand-symbol" aria-hidden="true">a</span><span>ProAge <em>Atlas</em><small>Research for healthy aging</small></span></Link>
+    <nav className="primary-navigation" aria-label="Main navigation">{links.map(([label,href])=><Link key={href} href={href} aria-current={current(href)?'page':undefined}>{label}</Link>)}</nav>
+    <Link className="header-contact header-laboratory" href="/laboratory/ask" aria-current={pathname==='/laboratory/ask'?'page':undefined}>Ask AI</Link>
+    <Sheet open={open} onOpenChange={setOpen}><SheetTrigger className="mobile-menu-trigger" aria-label="Open navigation"><span>Menu</span><Menu size={20}/></SheetTrigger><SheetContent className="mobile-sheet" side="right"><SheetTitle className="mobile-sheet-title">ProAge Atlas</SheetTitle><SheetDescription className="sr-only">Ask a research question, choose a health check-in or explore research tools and evidence.</SheetDescription><nav className="simple-mobile-navigation" aria-label="Mobile navigation"><Link className="mobile-main-action" href="/laboratory/ask" onClick={()=>setOpen(false)}>Ask AI</Link>{links.map(([label,href])=><Link key={href} href={href} onClick={()=>setOpen(false)} aria-current={current(href)?'page':undefined}>{label}</Link>)}<div className="mobile-secondary"><Link href="/laboratory" onClick={()=>setOpen(false)}>Where to start</Link><Link href="/contact" onClick={()=>setOpen(false)}>Contact</Link></div></nav></SheetContent></Sheet>
+  </header>;
 }

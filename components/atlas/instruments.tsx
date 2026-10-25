@@ -1,11 +1,5 @@
-import { DocumentLink as Link } from '@/components/site/research-link';
-import { calculatePhenoAge, sampleBiomarkers } from '@/lib/phenoage';
-import { planStudy } from '@/lib/study-planner';
-import PowerPreview from '@/components/science/power-preview';
-const exampleAge=calculatePhenoAge(sampleBiomarkers,'si').phenotypicAge;
-const examplePlan=planStudy({difference:5,sd:10,alpha:.05,power:.8,ratio:1,dropout:.15});
-export default function Instruments(){return <section className="atlas-instruments" aria-label="Research instruments"><div className="atlas-section-heading"><div><h2>Questions become <em>instruments.</em></h2></div><p>Published models with visible assumptions.<br/>Designed to be explored, understood and checked.</p></div><div className="instrument-grid">
-  <Link className="instrument-card instrument-pheno" href="/tools/phenoage"><div className="instrument-card-top"><span>Clinical biomarkers</span></div><h3>PhenoAge<br/><em>Explorer</em></h3><p>Explore clinical phenotypic age from chronological age and nine blood biomarkers.</p><div className="instrument-age-preview"><div><small>Synthetic example</small><strong>{exampleAge.toFixed(1)}<span>years</span></strong></div></div><div className="instrument-card-bottom"><span>Levine et al. · published model</span><span>Open explorer</span></div></Link>
-  <Link className="instrument-card instrument-study" href="/tools/study-planner"><div className="instrument-card-top"><span>Study design</span></div><h3>Study<br/><em>Planner</em></h3><p>Understand statistical power, group allocation and the sample a question requires.</p><div className="instrument-study-preview"><PowerPreview/><span>Illustrative d = 0.50 · {examplePlan.nA} evaluable per group</span></div><div className="instrument-card-bottom"><span>Noncentral t · two independent groups</span><span>Plan a study</span></div></Link>
-  </div><Link href="/laboratory/ask" className="instrument-copilot"><div><h3>Evidence <em>Copilot</em></h3><p>Build a source set. Compare methods. Keep uncertainty in the answer.</p></div><span className="instrument-copilot-link">Explore the assistant<small>Compare selected notes with source-linked answers</small></span></Link>
-</section>}
+import {DocumentLink as Link} from '@/components/site/research-link';
+export default function Instruments(){return <section className="research-tools-section" aria-labelledby="research-tools-heading"><h2 id="research-tools-heading">Research <em>calculators.</em></h2><div className="research-tool-cards">
+  <Link className="research-tool-card" href="/tools/phenoage"><div><h3>PhenoAge Explorer</h3><p>Explore clinical phenotypic age using chronological age and nine blood biomarkers.</p></div><p className="tool-requirement">You will need laboratory results and their units.</p><span>Open calculator</span></Link>
+  <Link className="research-tool-card" href="/tools/study-planner"><div><h3>Study Planner</h3><p>Estimate sample size and statistical power for a two-group study.</p></div><p className="tool-requirement">Set the expected difference, variation and study assumptions.</p><span>Plan a study</span></Link>
+</div></section>}

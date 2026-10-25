@@ -1,6 +1,6 @@
 import Link from './research-link';
 const navigation = [
-  { title: 'Workspace', links: [['Laboratory','/laboratory'],['Instruments','/tools'],['Evidence library','/laboratory/evidence'],['Evidence Copilot','/laboratory/ask']] },
+  { title: 'Explore', links: [['Ask AI','/laboratory/ask'],['Health check-ins','/tools/check-ins'],['Research tools','/tools'],['Evidence library','/laboratory/evidence']] },
   { title: 'Project', links: [['About Atlas','/about'],['Investors','/investors'],['Roadmap','/roadmap'],['Contact','/contact']] },
 ];
 export default function Footer() {

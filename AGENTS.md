@@ -16,11 +16,13 @@ The website is multi-page. Preserve header/footer/mobile paths, keyboard focus, 
 
 Public copy is English. Atlas is an independent research software initiative. Attribute OIAA titles, portraits and initiatives; do not imply unconfirmed startup employment or endorsement. Never invent clinical trials, patient cohorts, scientific performance, customer counts, revenue, investment or product adoption.
 
-Describe illustrative imagery accurately through accessible descriptions; the owner explicitly removed visible decorative captions and motion controls. The assistant checks scope before synthesizing up to six retrieved PubMed-indexed abstracts via Europe PMC, or selected curated notes. It does not retrieve full text or provide a systematic review. Preserve citation validation, current-source provenance, bounded conversation and per-user/site-wide quotas. Calculators must retain methods, units, versions, source links and assumptions. Do not turn research outputs into treatment or diagnostic advice.
+Describe illustrative imagery accurately through accessible descriptions; the owner explicitly removed visible decorative captions and motion controls. The assistant checks scope before synthesizing up to six retrieved PubMed-indexed abstracts via Europe PMC, or selected curated notes. It does not retrieve full text or provide a systematic review. Preserve citation validation, current-source provenance, bounded conversation and durable anonymous-network/site-wide quotas. The owner explicitly requires public chat with no account or Cloudflare login. Calculators must retain methods, units, versions, source links and assumptions. Do not turn research outputs into treatment or diagnostic advice.
 
 ## Data and security
 
-Keep AI secrets server-side. Verify Cloudflare Access JWT signatures, issuer, audience and expiry; never trust identity headers or decoded claims by themselves. Restrict the inbox to the configured owner. Preserve form origin checks, bounded input and durable abuse limits. Do not commit personal enquiry records, secret material or generated build artifacts.
+Health check-ins run entirely in browser memory. Do not send answers to AI, store them remotely or invent diagnostic/biological-age scores. Preserve official GAD-7, PHQ-9 and SARC-F questions, scoring, sources and limitations; other check-ins are unscored reflections.
+
+Keep AI secrets server-side. Keep the private inbox behind Cloudflare Access and verify its JWT signatures, issuer, audience and expiry; never trust identity headers or decoded claims by themselves. Restrict the inbox to the configured owner. Preserve form origin checks, bounded input and durable abuse limits. Do not commit personal enquiry records, secret material or generated build artifacts.
 
 ## Verification
 
