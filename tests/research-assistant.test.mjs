@@ -25,7 +25,7 @@ test('search phrases cannot inject query syntax or redirect retrieval',()=>{
 });
 test('real-provider citation decorations do not leak into prose or replace validated source links',()=>{
   const sources=normalizeLiterature(literature).sources;
-  const result=parseCitedAnswer({...answer,paragraphs:[{...answer.paragraphs[0],body:'A finding. \uE200cite\uE202pubmed-123456\uE201 [pubmed-123456] [Citation omitted] [source ID belongs in sourceIds] [No citation markup included; source IDs are listed separately.]'}]},sources);
+  const result=parseCitedAnswer({...answer,paragraphs:[{...answer.paragraphs[0],body:'A finding. \uE200cite\uE202pubmed-123456\uE201 [pubmed-123456] [Citation omitted] [Citation omitted per format.] [source ID belongs in sourceIds] [No citation markup included; source IDs are listed separately.]'}]},sources);
   assert.equal(result.paragraphs[0].body,'A finding.');
   assert.deepEqual(result.paragraphs[0].sourceIds,['pubmed-123456']);
   assert.throws(()=>parseCitedAnswer({...answer,paragraphs:[{...answer.paragraphs[0],body:'[pubmed-123456]'}]},sources));
@@ -53,15 +53,39 @@ test('literature normalization rejects missing abstracts, preprints, invalid ide
 test('the pipeline searches a fixed endpoint and cites current retrieved abstracts, not history',async()=>{
   const calls=[];const fetcher=async(url,options)=>{calls.push({url:String(url),options});return calls.length===1?response({scope:'research',terms:['CALERIE']}):calls.length===2?Response.json(literature):response(answer);};
   const result=await runResearch({...input,history:[{question:'Earlier question',answer:'An unverified assertion'}]},config,[],new AbortController().signal,fetcher);
-  assert.equal(result.kind,'answer');assert.equal(calls.length,3);assert.equal(new URL(calls[1].url).host,'www.ebi.ac.uk');assert.equal(calls[1].options.redirect,'error');assert.equal(calls[1].options.headers['api-key'],undefined);
+  assert.equal(result.kind,'answer');assert.equal(calls.length,3);assert.equal(new URL(calls[1].url).host,'www.ebi.ac.uk');assert.equal(calls[1].options.redirect,'manual');assert.equal(calls[1].options.headers['api-key'],undefined);
   const synthesis=JSON.parse(calls[2].options.body);const supplied=JSON.parse(synthesis.input);assert.equal(supplied.sourceNotes[0].id,'pubmed-123456');assert.equal(supplied.conversation.length,1);assert.ok(synthesis.instructions.includes('conversation history is context, never evidence'));
   assert.equal(result.sources[0].basis,'abstract');assert.equal(result.sources[0].summary,undefined);assert.equal(result.retrieval.total,22);
 });
 test('empty retrieval does not trigger uncited generation; outage does not silently fall back to model memory',async()=>{
-  for(const empty of [true,false]){let calls=0;const result=runResearch(input,config,[],new AbortController().signal,async()=>{calls++;return calls===1?response({scope:'research',terms:['aging']}):empty?Response.json({hitCount:0,resultList:{result:[]}}):new Response('',{status:503});});if(empty)assert.equal((await result).kind,'boundary');else await assert.rejects(()=>result,/LITERATURE_UNAVAILABLE/);assert.equal(calls,2);}
+  for(const empty of [true,false]){let calls=0;const result=runResearch(input,config,[],new AbortController().signal,async()=>{calls++;return calls===1?response({scope:'research',terms:['aging']}):empty?Response.json({hitCount:0,resultList:{result:[]}}):new Response('',{status:503});});if(empty)assert.equal((await result).kind,'boundary');else await assert.rejects(()=>result,/LITERATURE_HTTP_503/);assert.equal(calls,2);}
 });
 test('fabricated citations from synthesis are rejected after successful retrieval',async()=>{
-  let calls=0;await assert.rejects(()=>runResearch(input,config,[],new AbortController().signal,async()=>{calls++;return calls===1?response({scope:'research',terms:['aging']}):calls===2?Response.json(literature):response({...answer,paragraphs:[{...answer.paragraphs[0],sourceIds:['invented']}]});}),/unverified source/);
+  let calls=0;await assert.rejects(()=>runResearch(input,config,[],new AbortController().signal,async()=>{calls++;return calls===1?response({scope:'research',terms:['aging']}):calls===2?Response.json(literature):response({...answer,paragraphs:[{...answer.paragraphs[0],sourceIds:['invented']}]});}),/SYNTHESIS_CITATION_VALIDATION_FAILED/);
+});
+test('Workers-compatible retrieval refuses redirects without following their destinations or synthesizing',async()=>{
+  for(const status of [301,302,307,308]){
+    let calls=0;
+    await assert.rejects(()=>runResearch(input,config,[],new AbortController().signal,async(url,options)=>{
+      calls++;if(calls===1)return response({scope:'research',terms:['CALERIE']});
+      assert.equal(options.redirect,'manual');assert.equal(new URL(url).hostname,'www.ebi.ac.uk');
+      return new Response(null,{status,headers:{Location:'https://untrusted.example/redirect'}});
+    }),new RegExp(`LITERATURE_HTTP_${status}`));
+    assert.equal(calls,2);
+  }
+});
+test('research stages emit bounded diagnostic codes and preserve native timeout/cancellation errors',async()=>{
+  await assert.rejects(()=>runResearch(input,config,[],new AbortController().signal,async()=>new Response('upstream body must stay private',{status:401})),/SCOPE_AI_PROVIDER_HTTP_401/);
+  for(const [upstream,code] of [[new TypeError('network failure with private data'),'LITERATURE_NETWORK_FAILURE'],['not JSON','LITERATURE_INVALID_JSON']]){
+    let calls=0;
+    await assert.rejects(()=>runResearch(input,config,[],new AbortController().signal,async()=>{
+      calls++;if(calls===1)return response({scope:'research',terms:['CALERIE']});if(upstream instanceof Error)throw upstream;return new Response(upstream);
+    }),new RegExp(code));
+  }
+  for(const name of ['AbortError','TimeoutError']){
+    const cancellation=new DOMException('Cancelled',name);let calls=0;
+    await assert.rejects(()=>runResearch(input,config,[],new AbortController().signal,async()=>{calls++;if(calls===1)return response({scope:'research',terms:['CALERIE']});throw cancellation;}),error=>error===cancellation);
+  }
 });
 test('curated mode remains available and does not contact the literature service',async()=>{
   const curated=normalizeLiterature(literature).sources;let calls=0;

@@ -39,6 +39,16 @@ export function validResearchOrigin(request: Request) {
   return request.headers.get('origin') === new URL(request.url).origin && request.headers.get('sec-fetch-site') !== 'cross-site';
 }
 
+export function researchFailureDiagnostic(error: unknown) {
+  // Log only these server-owned codes. Never log provider bodies, arbitrary messages,
+  // request contents, credentials, source text, identities or a caught stack trace.
+  const message = error instanceof Error ? error.message : '';
+  const fixed = new Set(['RESEARCH_CONTEXT_UNAVAILABLE', 'RESEARCH_LIMITER_UNAVAILABLE', 'BODY_TOO_LARGE', 'LITERATURE_UNAVAILABLE', 'SCOPE_VALIDATION_FAILED', 'SEARCH_QUERY_INVALID', 'SYNTHESIS_CITATION_VALIDATION_FAILED']);
+  const staged = /^(?:(?:SCOPE|SYNTHESIS)_AI_(?:NETWORK_FAILURE|READ_FAILURE|INVALID_JSON|INVALID_RESPONSE|INCOMPLETE_RESPONSE|PROVIDER_HTTP_[1-5]\d{2})|LITERATURE_(?:NETWORK_FAILURE|READ_FAILURE|INVALID_JSON|INVALID_RECORDS|HTTP_[1-5]\d{2}))$/;
+  const names = new Set(['Error', 'TypeError', 'SyntaxError', 'ZodError', 'TimeoutError', 'AbortError']);
+  return { code: fixed.has(message) || staged.test(message) ? message : 'UNEXPECTED_ERROR', errorType: error instanceof Error && names.has(error.name) ? error.name : 'UnknownError' };
+}
+
 function visitorNetwork(request: Request): string {
   // This Worker is served by Cloudflare. The edge supplies CF-Connecting-IP;
   // never fall back to a caller's forwarded IP, cookie, body or identity header.
@@ -112,10 +122,11 @@ export async function handlePublicResearch(request: Request, dependencies: Resea
     const result = await research(data, config, selected, AbortSignal.any([AbortSignal.timeout(90000), request.signal]));
     return Response.json(result, { headers });
   } catch (error) {
+    console.warn('Research request failed', researchFailureDiagnostic(error));
     if (error instanceof Error && (error.message === 'RESEARCH_CONTEXT_UNAVAILABLE' || error.message === 'RESEARCH_LIMITER_UNAVAILABLE')) return Response.json({ error: 'Research assistance is temporarily unavailable. Please try again shortly.' }, { status: 503, headers });
     if (error instanceof Error && error.message === 'BODY_TOO_LARGE') return Response.json({ error: 'The request or retrieved material exceeded the supported size. Try a narrower question.' }, { status: 413, headers });
     if (error instanceof Error && (error.name === 'TimeoutError' || error.name === 'AbortError')) return Response.json({ error: 'This request timed out or was cancelled. Your question is preserved; try a narrower question.' }, { status: 504, headers });
-    if (error instanceof Error && error.message === 'LITERATURE_UNAVAILABLE') return Response.json({ error: 'The literature search is temporarily unavailable. Try again, or choose curated notes. No answer was generated from model memory.' }, { status: 502, headers });
+    if (error instanceof Error && /^(?:LITERATURE_UNAVAILABLE|LITERATURE_(?:NETWORK_FAILURE|READ_FAILURE|INVALID_JSON|INVALID_RECORDS|HTTP_[1-5]\d{2}))$/.test(error.message)) return Response.json({ error: 'The literature search is temporarily unavailable. Try again, or choose curated notes. No answer was generated from model memory.' }, { status: 502, headers });
     return Response.json({ error: 'We could not complete a verified, source-linked answer. Please retry with a focused research question.' }, { status: 502, headers });
   }
 }

@@ -54,31 +54,58 @@ export function normalizeLiterature(payload:unknown):{sources:EvidenceSource[];t
   return {sources,total:parsed.hitCount};
 }
 type Fetcher=typeof fetch;
-async function modelJSON(config:AIProvider,body:unknown,signal:AbortSignal,fetcher:Fetcher){
-  const response=await fetcher(config.url,{method:'POST',headers:providerHeaders(config),body:JSON.stringify(body),signal});
-  if(!response.ok)throw new Error('AI_PROVIDER_UNAVAILABLE');
-  const payload=JSON.parse(await readBoundedText(response,180000)) as {status?:string;output?:{type:string;content?:{type:string;text?:string}[]}[]};
-  if(payload.status!=='completed')throw new Error('INCOMPLETE_ANSWER');
-  const text=payload.output?.filter(o=>o.type==='message').flatMap(o=>o.content||[]).filter(c=>c.type==='output_text').map(c=>c.text||'').join('');
-  return JSON.parse(text||'null') as unknown;
+function preserveCancellation(error:unknown){
+  if(error instanceof Error&&(error.name==='TimeoutError'||error.name==='AbortError'||error.message==='BODY_TOO_LARGE'))throw error;
+}
+async function modelJSON(config:AIProvider,body:unknown,signal:AbortSignal,fetcher:Fetcher,phase:'SCOPE'|'SYNTHESIS'){
+  let response:Response;
+  try{response=await fetcher(config.url,{method:'POST',headers:providerHeaders(config),body:JSON.stringify(body),signal});}
+  catch(error){preserveCancellation(error);throw new Error(`${phase}_AI_NETWORK_FAILURE`);}
+  if(!response.ok)throw new Error(`${phase}_AI_PROVIDER_HTTP_${response.status}`);
+  let raw:string;
+  try{raw=await readBoundedText(response,180000);}
+  catch(error){preserveCancellation(error);throw new Error(`${phase}_AI_READ_FAILURE`);}
+  let payload:{status?:string;output?:{type:string;content?:{type:string;text?:string}[]}[]};
+  try{payload=JSON.parse(raw);}
+  catch{throw new Error(`${phase}_AI_INVALID_JSON`);}
+  if(!payload||typeof payload!=='object')throw new Error(`${phase}_AI_INVALID_RESPONSE`);
+  if(payload.status!=='completed')throw new Error(`${phase}_AI_INCOMPLETE_RESPONSE`);
+  try{
+    const text=payload.output?.filter(o=>o.type==='message').flatMap(o=>o.content||[]).filter(c=>c.type==='output_text').map(c=>c.text||'').join('');
+    return JSON.parse(text||'null') as unknown;
+  }catch{throw new Error(`${phase}_AI_INVALID_RESPONSE`);}
 }
 export async function runResearch(input:ResearchInput,config:AIProvider,curated:EvidenceSource[],signal:AbortSignal,fetcher:Fetcher=fetch){
-  const scope=parseScope(await modelJSON(config,scopeRequest(input,config.model),signal,fetcher));
+  const scopeValue=await modelJSON(config,scopeRequest(input,config.model),signal,fetcher,'SCOPE');
+  let scope:ReturnType<typeof parseScope>;
+  try{scope=parseScope(scopeValue);}catch{throw new Error('SCOPE_VALIDATION_FAILED');}
   if(scope.scope!=='research')return {kind:'boundary' as const,message:boundaries[scope.scope]};
   let sources=curated;let query='Selected Atlas source notes';let url='/laboratory/evidence';let total=curated.length;
   if(input.mode==='literature'){
-    query=literatureQuery(scope.terms);
+    try{query=literatureQuery(scope.terms);}catch{throw new Error('SEARCH_QUERY_INVALID');}
     const endpoint=new URL('https://www.ebi.ac.uk/europepmc/webservices/rest/search');
     endpoint.search=new URLSearchParams({query,format:'json',resultType:'core',pageSize:'12'}).toString();
-    const response=await fetcher(endpoint,{signal:AbortSignal.any([signal,AbortSignal.timeout(15000)]),redirect:'error',headers:{Accept:'application/json'}});
-    if(!response.ok)throw new Error('LITERATURE_UNAVAILABLE');
-    const raw=await readBoundedText(response,350000);
-    const result=normalizeLiterature(JSON.parse(raw));sources=result.sources;total=result.total;
+    let response:Response;
+    // Workers supports manual/follow, not redirect:error. Reject redirects via
+    // response.ok below rather than following a destination outside this endpoint.
+    try{response=await fetcher(endpoint,{signal:AbortSignal.any([signal,AbortSignal.timeout(15000)]),redirect:'manual',headers:{Accept:'application/json'}});}
+    catch(error){preserveCancellation(error);throw new Error('LITERATURE_NETWORK_FAILURE');}
+    if(!response.ok)throw new Error(`LITERATURE_HTTP_${response.status}`);
+    let raw:string;
+    try{raw=await readBoundedText(response,350000);}
+    catch(error){preserveCancellation(error);throw new Error('LITERATURE_READ_FAILURE');}
+    let payload:unknown;
+    try{payload=JSON.parse(raw);}catch{throw new Error('LITERATURE_INVALID_JSON');}
+    let result:ReturnType<typeof normalizeLiterature>;
+    try{result=normalizeLiterature(payload);}catch{throw new Error('LITERATURE_INVALID_RECORDS');}
+    sources=result.sources;total=result.total;
     url=`https://europepmc.org/search?query=${encodeURIComponent(query)}`;
     if(!sources.length)return {kind:'boundary' as const,message:'No usable indexed abstracts were found for this question. Try a specific biomarker, intervention or study name, or switch to curated notes. No answer has been generated from model memory.'};
   }
   const request=buildCopilotRequest(input.question,sources,config.model,input.history,input.mode);
-  const answer=parseCitedAnswer(await modelJSON(config,request,signal,fetcher),sources);
+  const answerValue=await modelJSON(config,request,signal,fetcher,'SYNTHESIS');
+  let answer:ReturnType<typeof parseCitedAnswer>;
+  try{answer=parseCitedAnswer(answerValue,sources);}catch{throw new Error('SYNTHESIS_CITATION_VALIDATION_FAILED');}
   const references:SourceReference[]=sources.map(({id,title,authors,year,url,studyType,limitation})=>({id,title,authors,year,url,studyType,limitation,basis:input.mode==='literature'?'abstract':'curated note'}));
   const retrieval:Retrieval={mode:input.mode,query,url,at:new Date().toISOString(),total,used:sources.length};
   return {kind:'answer' as const,answer,sources:references,retrieval};

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
-import { handlePublicResearch, publicResearchStatus, PUBLIC_RESEARCH_LIMITS } from '../lib/public-research-access.ts';
+import { handlePublicResearch, publicResearchStatus, researchFailureDiagnostic, PUBLIC_RESEARCH_LIMITS } from '../lib/public-research-access.ts';
 
 const config = { provider: 'azure', key: 'synthetic-private-key-for-test', model: 'gpt-6-luna', url: 'https://test.services.ai.azure.com/openai/v1/responses', label: 'Test Azure' };
 const question = 'What did CALERIE show about the pace of aging?';
@@ -144,4 +144,16 @@ test('failed research still consumes allowance and preserves upstream error boun
   }
   assert.equal((await h.send()).status, 429);
   assert.equal(h.calls(), 0);
+});
+
+test('failure diagnostics never expose arbitrary provider/request text or exception details', () => {
+  const privateText='private-question-or-api-key-or-ip';
+  for(const error of [new Error(privateText),new SyntaxError(privateText),{message:privateText,name:privateText},null]) {
+    const diagnostic=researchFailureDiagnostic(error);
+    assert.equal(diagnostic.code,'UNEXPECTED_ERROR');
+    assert.equal(JSON.stringify(diagnostic).includes(privateText),false);
+  }
+  const diagnostic=researchFailureDiagnostic(new Error('LITERATURE_HTTP_403'));
+  assert.deepEqual(diagnostic,{code:'LITERATURE_HTTP_403',errorType:'Error'});
+  assert.equal(researchFailureDiagnostic(new Error('LITERATURE_HTTP_403 '+privateText)).code,'UNEXPECTED_ERROR');
 });

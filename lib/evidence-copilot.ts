@@ -11,7 +11,7 @@ export function parseCitedAnswer(value:unknown,sources:EvidenceSource[]) {
   if(answer.paragraphs.some(p=>p.sourceIds.some(id=>!ids.has(id))))throw new Error('Answer contains an unverified source reference');
   // Provider citation tokens are not HTML links. The UI renders verified IDs itself.
   const prose=(text:string)=>text.replace(/\uE200cite\uE202[^\uE201]*\uE201/g,'')
-    .replace(/\[(?:citation (?:omitted|removed)|source ids?\b[^\]\n]*|no (?:bracketed )?citation(?:s| markup)?\b[^\]\n]*)\]/gi,'')
+    .replace(/\[(?:citation (?:omitted|removed)\b[^\]\n]*|source ids?\b[^\]\n]*|no (?:bracketed )?citation(?:s| markup)?\b[^\]\n]*)\]/gi,'')
     .replace(/\[([^\]\n]+)\]/g,(match,id)=>ids.has(id)?'':match)
     .replace(/[ \t]+([.,;:!?])/g,'$1').replace(/[ \t]{2,}/g,' ').trim();
   return answerSchema.parse({...answer,title:prose(answer.title),paragraphs:answer.paragraphs.map(p=>({...p,heading:prose(p.heading),body:prose(p.body)})),limitations:answer.limitations.map(prose)});
