@@ -64,11 +64,11 @@ export function mountCanvasScience(element:HTMLElement,canvas:HTMLCanvasElement,
     if(variant==='cell') {
       const radius=scale*1.79;
       const glass=context.createRadialGradient(width/2-radius*.3,height/2-radius*.35,radius*.15,width/2,height/2,radius);
-      glass.addColorStop(0,'rgba(89,148,115,0)');glass.addColorStop(.76,'rgba(101,157,127,.015)');glass.addColorStop(.92,'rgba(73,133,102,.08)');glass.addColorStop(1,'rgba(73,133,102,0)');
+      glass.addColorStop(0,'rgba(94,121,143,0)');glass.addColorStop(.76,'rgba(108,137,158,.015)');glass.addColorStop(.92,'rgba(76,109,136,.08)');glass.addColorStop(1,'rgba(76,109,136,0)');
       context.fillStyle=glass;context.beginPath();context.ellipse(width/2,height/2,radius,radius*1.04,0,0,Math.PI*2);context.fill();
       const core=projectParticle({x:-.15,y:.02,z:.1,size:1,tone:1,alpha:1},phase,variant,px,py),cx=width/2+core.x*scale,cy=height/2-core.y*scale,cr=scale*.67;
       const volume=context.createRadialGradient(cx-cr*.4,cy-cr*.4,0,cx,cy,cr);
-      volume.addColorStop(0,'rgba(119,178,145,.15)');volume.addColorStop(.55,'rgba(37,104,79,.12)');volume.addColorStop(1,'rgba(22,83,62,.02)');
+      volume.addColorStop(0,'rgba(138,163,183,.15)');volume.addColorStop(.55,'rgba(49,81,108,.12)');volume.addColorStop(1,'rgba(36,65,88,.02)');
       context.fillStyle=volume;context.beginPath();context.arc(cx,cy,cr,0,Math.PI*2);context.fill();
     }
     const projected=points.map(p=>({p,...projectParticle(p,phase,variant,px,py)}));
@@ -77,7 +77,7 @@ export function mountCanvasScience(element:HTMLElement,canvas:HTMLCanvasElement,
       const {p,x,y,z}=point,perspective=7/(7-z),size=p.size*perspective*Math.max(.7,scale/130);
       const depth=(z+2)/4,opacity=p.alpha*(.36+depth*.64);
       context.globalAlpha=opacity;
-      context.fillStyle=p.tone===0?'#397d6e':p.tone===1?'#15594b':'#669b83';
+      context.fillStyle=p.tone===0?'#567a95':p.tone===1?'#304e66':'#94a8b6';
       context.beginPath();context.arc(width/2+x*scale*perspective,height/2-y*scale*perspective,size,0,Math.PI*2);context.fill();
     }
     context.globalAlpha=1;
