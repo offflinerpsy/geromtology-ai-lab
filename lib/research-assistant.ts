@@ -5,7 +5,7 @@ import { buildCopilotRequest, parseCitedAnswer } from './evidence-copilot.ts';
 import { providerHeaders, type AIProvider } from './ai-provider.ts';
 
 export const researchInput = z.object({
-  question: z.string().trim().min(8).max(2000),
+  question: z.string().trim().min(3).max(2000),
   mode: z.enum(['literature', 'curated']).default('literature'),
   sourceIds: z.array(z.string().max(100)).max(6).default([]),
   history: z.array(z.object({question:z.string().max(2000),answer:z.string().max(4000)}).strict()).max(3).default([]),

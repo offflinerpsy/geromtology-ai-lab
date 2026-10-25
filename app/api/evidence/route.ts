@@ -15,7 +15,7 @@ export async function POST(request:Request){
   try{
     const raw=await readBoundedText(request,32000);
     let value:unknown;try{value=JSON.parse(raw);}catch{return Response.json({error:'The request could not be read.'},{status:400,headers});}
-    const parsed=researchInput.safeParse(value);if(!parsed.success)return Response.json({error:'Enter a research question of 8–2,000 characters. Use up to three previous turns.'},{status:400,headers});
+    const parsed=researchInput.safeParse(value);if(!parsed.success)return Response.json({error:'Enter a research question of 3–2,000 characters. Use up to three previous turns.'},{status:400,headers});
     const data=parsed.data;
     const selected=evidenceSources.filter(s=>data.sourceIds.includes(s.id));
     if(data.mode==='curated'&&(!selected.length||selected.length!==new Set(data.sourceIds).size))return Response.json({error:'Choose one to six sources from the current library.'},{status:400,headers});
