@@ -66,7 +66,7 @@ export default function EvidenceCopilot({initialSource}:{initialSource?:string})
       <noscript><p>JavaScript is needed for the assistant. You can still <a href="/laboratory/evidence">read the evidence library</a>.</p></noscript>
     </div>
     {last?.answer&&<aside className="research-chat-evidence" aria-label="Evidence for the latest answer">
-      <div className="research-chat-evidence-heading"><h2>Sources</h2><span>{last.sources.length} considered</span></div><p>{last.retrieval?.mode==='literature'?`${last.retrieval.used} usable abstracts from up to 12 search results.`:'Selected notes from the Atlas evidence library.'}</p>
+      <div className="research-chat-evidence-heading"><h2>Sources</h2><span>{last.sources.length} considered</span></div><p>{last.retrieval?.mode==='literature'?`${last.retrieval.used} usable ${last.retrieval.used===1?'abstract':'abstracts'} from up to 12 search results.`:'Selected notes from the Atlas evidence library.'}</p>
       {last.sources.map(s=><article key={s.id}><small>{s.year} · {s.basis}</small><a href={s.url} target="_blank" rel="noreferrer">{s.title}</a><details><summary>Source details</summary><p>{s.authors}</p><p>{s.studyType}</p><p>{s.limitation}</p></details></article>)}
       <details className="research-chat-search"><summary>Search record</summary><p>{last.retrieval?.query}</p><p>{last.retrieval?.at.slice(0,10)} · {last.retrieval?.total.toLocaleString()} matches</p><a href={last.retrieval?.url} target="_blank" rel="noreferrer">Open source search</a></details>
     </aside>}</div>
