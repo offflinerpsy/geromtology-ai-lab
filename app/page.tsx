@@ -1,5 +1,5 @@
 import { pageMetadata } from '@/lib/seo';
-export const metadata = pageMetadata('ProAge Atlas — Research for healthy aging', 'Scientific evidence, aging measurements and study planning for longevity research teams. Explore the research prototype.', '/');
+export const metadata = pageMetadata('ProAge Atlas — AI for aging research', 'An AI evidence workspace for geroscience teams. Search biomedical literature, compare findings and export a source-linked research brief.', '/');
 import Link from "@/components/site/research-link";
 import HomeHeroAnimated from "@/components/site/home-hero-animated";
 import ScientificScene from "@/components/science/scientific-scene";
@@ -10,8 +10,8 @@ export default function Home(){return <>
     <main id="main">
       <HomeHeroAnimated />
       <section className="institute section-light" id="platform">
-        <div className="container intro-grid"><div><h2 className="statement reveal">From a question<br />to the next study.</h2><div className="intro-columns reveal"><p>Start with a research question. Find selected evidence, compare what a method measures and explore the design of the next study.</p><p>ProAge Atlas brings working research tools into one place. We are developing the connections between them so teams can prepare material they can inspect, export and review.</p></div></div></div>
-        <div className="container workflow-collection"><Link href="/laboratory/evidence"><h3>Organize evidence</h3><p>Find a useful source set for a focused research question.</p></Link><Link href="/laboratory/biomarkers"><h3>Compare methods</h3><p>Connect the measurement with its inputs, population and outcome.</p></Link><Link href="/tools/study-planner"><h3>Plan the next study</h3><p>Explore power, recruitment and explicit design assumptions.</p></Link></div>
+        <div className="container intro-grid"><div><h2 className="statement reveal">Your research question.<br />An evidence-backed starting point.</h2><div className="intro-columns reveal"><p>ProAge Atlas is an independent software startup building an AI workspace for teams studying aging. Our first product is Evidence Copilot: a focused assistant that turns a scientific question into a brief with sources and limitations.</p><p>Search biomedical literature, compare findings and ask follow-up questions. Use the accompanying measurement and study-planning tools to examine methods and assumptions. Next, we are building toward saved projects and team review.</p></div></div></div>
+        <div className="container workflow-collection"><Link href="/laboratory/ask"><h3>Ask the evidence</h3><p>Search indexed research and get a cited brief to review.</p></Link><Link href="/laboratory/biomarkers"><h3>Compare methods</h3><p>Connect the measurement with its inputs, population and outcome.</p></Link><Link href="/tools/study-planner"><h3>Plan the next study</h3><p>Explore power, recruitment and explicit design assumptions.</p></Link></div>
       </section>
       <section className="research section-light research-living" id="research">
         <div className="container"><div className="section-heading reveal"><h2>Research across<br /><span className="muted">the life course.</span></h2></div>
@@ -28,11 +28,11 @@ export default function Home(){return <>
       </section>
       <section className="ai-lab" id="ai-lab">
         <div className="container">
-          <div className="lab-heading reveal"><h2>Research tools.<br /><span>One purposeful workflow.</span></h2><p>For small research teams connecting evidence, aging measurements and study design.</p></div>
-          <div className="lab-grid"><div className="lab-copy reveal"><h3>Evidence you can<br />follow back to its source.</h3><p>Use PhenoAge Explorer, plan sample sizes and compare selected scientific notes with Evidence Copilot. Each tool exposes the method or sources behind its output.</p><p>Next, we are working toward saved research packages and a connected review workflow. Explore what is available now, or help define a focused product pilot.</p><Link className="text-link" href="/laboratory">Explore ProAge Atlas</Link></div>
+          <div className="lab-heading reveal"><h2>An AI assistant.<br /><span>A scientific workflow.</span></h2><p>For geroscience labs and clinical research teams preparing evidence reviews and comparing aging measurements.</p></div>
+          <div className="lab-grid"><div className="lab-copy reveal"><h3>Evidence you can<br />follow back to its source.</h3><p>Evidence Copilot searches PubMed-indexed abstracts through Europe PMC, then uses Azure AI to compare the retrieved evidence. Source links, the search record and uncertainty stay alongside the answer.</p><p>The first output is a downloadable research brief. Our next product stage connects those briefs with saved source collections, method comparisons and shared review. Researchers remain responsible for interpretation.</p><Link className="text-link" href="/laboratory/ask">Try Evidence Copilot</Link></div>
             <Link className="lab-photo-link" href="/laboratory"><ScientificScene variant="molecule" caption={false}/><span>Inside the AI laboratory</span></Link>
           </div>
-          <p className="lab-note">ProAge Atlas · Research prototype. Saved projects and team collaboration are planned, not available yet.</p>
+          <p className="lab-note">Research prototype · AI evidence briefs available. Saved projects, team review and literature monitoring are planned.</p>
         </div>
       </section>
       <section className="people section-light" id="people">

@@ -48,9 +48,9 @@ export default function HomeHeroAnimated() {
       </div>
       <div className="hero-shade" />
       <div className="hero-content container">
-        <p className="eyebrow hero-eyebrow">ProAge Atlas · Longevity research platform</p>
-        <h1 id="hero-title">A research<br />workspace for<br /><span>healthy aging.</span></h1>
-        <div className="hero-intro"><p>Scientific evidence, aging measurements and study planning for longevity research teams. Explore the prototype and help shape what comes next.</p><div className="hero-product-actions"><Link className="text-link" href="/laboratory">Explore the prototype</Link><Link className="text-link" href="/contact?type=research">Become a research partner</Link></div></div>
+        <p className="eyebrow hero-eyebrow">ProAge Atlas · AI for aging research</p>
+        <h1 id="hero-title">AI research.<br />Built for<br /><span>healthy aging.</span></h1>
+        <div className="hero-intro"><p>An AI evidence workspace for geroscience teams. Find biomedical research, compare what studies support and turn a question into a source-linked brief.</p><div className="hero-product-actions"><Link className="text-link" href="/laboratory/ask">Ask Evidence Copilot</Link><Link className="text-link" href="/about">How Atlas works</Link></div></div>
       </div>
       <div className="hero-bottom container">
         <Link href="/institute" className="scroll-link">Discover the institute</Link>

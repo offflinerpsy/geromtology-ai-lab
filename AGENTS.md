@@ -16,7 +16,7 @@ The website is multi-page. Preserve header/footer/mobile paths, keyboard focus, 
 
 Public copy is English. Atlas is an independent research software initiative. Attribute OIAA titles, portraits and initiatives; do not imply unconfirmed startup employment or endorsement. Never invent clinical trials, patient cohorts, scientific performance, customer counts, revenue, investment or product adoption.
 
-Describe illustrative imagery accurately through accessible descriptions; the owner explicitly removed visible decorative captions and motion controls. The assistant synthesizes selected curated notes, not full-text retrieval. Calculators must retain methods, units, versions, source links and assumptions. Do not turn research outputs into treatment or diagnostic advice.
+Describe illustrative imagery accurately through accessible descriptions; the owner explicitly removed visible decorative captions and motion controls. The assistant checks scope before synthesizing up to six retrieved PubMed-indexed abstracts via Europe PMC, or selected curated notes. It does not retrieve full text or provide a systematic review. Preserve citation validation, current-source provenance, bounded conversation and per-user/site-wide quotas. Calculators must retain methods, units, versions, source links and assumptions. Do not turn research outputs into treatment or diagnostic advice.
 
 ## Data and security
 
