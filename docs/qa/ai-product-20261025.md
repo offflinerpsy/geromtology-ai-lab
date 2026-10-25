@@ -1,8 +1,8 @@
 # AI evidence product — release verification, 25 October 2026
 
-Initial product deployment source: `5531b0652fe523d3ec0dc9056de88e049f159b74` (tree `8dd3a3119907d37a246a10891dc8566a86f2a24e`). The follow-up in this revision corrects retrieval and citation display after live Azure verification.
+Production source: `9ef74c61b8959d480fce391216e3442bb9e9db5e` (tree `1f1c647fd506d0c9d2774309cd7f07c26afc8ce1`). This includes the product release and the live-verified retrieval/citation correction.
 
-Cloudflare build `8fa4c17a-2da1-4426-9e8a-58793da69962` completed successfully. Deployment `db37497d-9e28-4f5e-bcec-3078fcbe795d` serves Worker version `f790aa22-a2b1-42a7-a1c8-feeae0f67cf4` at 100% traffic. Rollback reference: `backup/before-ai-evidence-product-20261025` → `5393a879718a5440d17197ce0c47fa6a70a0db0e`.
+Cloudflare build `4f6c7b97-6676-4699-90e4-80c5c4e1b64b` completed successfully at 09:34:08 UTC. Deployment `045eb8d4-8f54-4158-8373-b033fed318ea` serves Worker version `69c522e2-508c-490e-94ef-4b151ef4f523` at 100% traffic. The production browser was reloaded after deployment and reached the configured signed-out state. Rollback reference: `backup/before-ai-evidence-product-20261025` → `5393a879718a5440d17197ce0c47fa6a70a0db0e`.
 
 ## Completed checks
 
