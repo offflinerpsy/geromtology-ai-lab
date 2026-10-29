@@ -236,7 +236,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {outline: 2px solid
 .article-section p {line-height: 1.9;}
 .article-nav > nav > a {font-size: .9375rem;transition: color .4s, padding-left .4s var(--ease-editorial);}
 .article-nav > nav > a:is(:hover, :focus-visible) {padding-left: 5px;}
-.content-card h3 {font-family: var(--font-editorial);font-size: 2rem;line-height: 1.2;letter-spacing: -.025em;}
+.content-card :is(h2,h3) {font-family: var(--font-editorial);font-size: 2rem;line-height: 1.2;letter-spacing: -.025em;}
 .content-card-copy > .eyebrow {font-size: .8125rem;}
 .card-read {font-size: .875rem;}
 .related-pages {background: #d7d6d5;padding-block: 55px 65px;}
@@ -342,7 +342,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {outline: 2px solid
   .page-hero h1 {font-size: clamp(3rem, 7vw, 4rem);}
   .article-layout {display: block;}
   .article-nav {position: static;}
-  .content-card h3 {font-size: 1.8rem;}
+  .content-card :is(h2,h3) {font-size: 1.8rem;}
   .profile-hero .page-hero-grid {grid-template-columns: 1fr;}
   .profile-portrait {height: 440px;margin-left: 0;}
 }
@@ -439,7 +439,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {outline: 2px solid
   .article-section h2 {font-size: 2.3rem;}
   .article-nav > nav > a {font-size: .9375rem;}
   .source-record h2 {font-size: 1.75rem;}
-  .content-card h3 {font-size: 1.9rem;}
+  .content-card :is(h2,h3) {font-size: 1.9rem;}
 }
 @media (hover: none) {
   .portrait img, .founder-image img, .person-content-card .content-card-image img, .profile-portrait img {filter: grayscale(0);}

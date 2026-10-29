@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
 import { Check, Download } from 'lucide-react';
+import Link from 'next/link';
 import { evidenceSources, searchEvidence } from '@/lib/atlas-evidence';
 import type { CopilotAnswer } from '@/lib/evidence-copilot';
 import type { SourceReference, Retrieval } from '@/lib/research-assistant';
@@ -15,8 +16,8 @@ export default function EvidenceCopilot({initialSource}:{initialSource?:string})
   const [busy,setBusy]=useState(false),[error,setError]=useState(''),[provider,setProvider]=useState('');
   const controller=useRef<AbortController|null>(null),questionRef=useRef<HTMLTextAreaElement>(null),resultRef=useRef<HTMLElement|null>(null);
   const last=turns.at(-1);const matches=[...evidenceSources.filter(s=>selected.includes(s.id)),...searchEvidence(question).filter(s=>!selected.includes(s.id))];const full=turns.length>=4;
-  async function checkStatus(signal?:AbortSignal){setStatus('checking');try{const response=await fetch('/api/evidence',{signal});if(!response.ok)throw new Error();const body=await response.json() as {configured?:boolean;provider?:string;authenticated?:boolean};setProvider(body.provider||'');setStatus(body.configured?'ready':'setup');}catch(e){if(!(e instanceof DOMException&&e.name==='AbortError'))setStatus('error');}}
-  useEffect(()=>{const abort=new AbortController();void checkStatus(abort.signal);return()=>{abort.abort();controller.current?.abort();};},[]);
+  async function checkStatus(signal?:AbortSignal){try{const response=await fetch('/api/evidence',{signal});if(!response.ok)throw new Error();const body=await response.json() as {configured?:boolean;provider?:string;authenticated?:boolean};setProvider(body.provider||'');setStatus(body.configured?'ready':'setup');}catch(e){if(!(e instanceof DOMException&&e.name==='AbortError'))setStatus('error');}}
+  useEffect(()=>{const abort=new AbortController();fetch('/api/evidence',{signal:abort.signal}).then(async response=>{if(!response.ok)throw new Error();return response.json() as Promise<{configured?:boolean;provider?:string}>;}).then(body=>{setProvider(body.provider||'');setStatus(body.configured?'ready':'setup');}).catch(e=>{if(!(e instanceof DOMException&&e.name==='AbortError'))setStatus('error');});return()=>{abort.abort();controller.current?.abort();};},[]);
   function reset(){setTurns([]);setQuestion('');setSelected([]);setMode('literature');setError('');questionRef.current?.focus();}
   function suggest(value:string){setQuestion(value);if(mode==='curated')setSelected(searchEvidence(value).slice(0,4).map(s=>s.id));questionRef.current?.focus();}
   async function ask(event:React.FormEvent){
@@ -61,9 +62,9 @@ export default function EvidenceCopilot({initialSource}:{initialSource?:string})
         {(status==='error'||status==='setup')&&<p className="atlas-error">The assistant is temporarily unavailable. <button className="atlas-quiet" type="button" onClick={()=>void checkStatus()}>Try connecting again</button></p>}
       </form>
       {turns.length===0&&<div className="research-chat-prompts"><p>Or start with a question</p>{prompts.map(p=><button key={p} disabled={busy} onClick={()=>suggest(p)}>{p}</button>)}</div>}
-      <p id="research-chat-scope" className="research-chat-scope">For research, not personal medical advice. Please leave out personal health details. Conversations clear when you reload. <a href="/privacy">Privacy</a></p>
-      <details className="research-chat-method"><summary>How answers are prepared</summary><p>{provider?provider+'. ':''}The assistant checks the topic, searches Europe PMC or reads your selected notes, then prepares an answer with source links. It reads abstracts and summaries, not full papers. Check important interpretations against the original source.</p><p>A small daily allowance keeps the public assistant available. People on the same network share this allowance.</p><div><a href="/laboratory/ai-evaluation">Read the method</a><a href="/laboratory/evidence">Browse the evidence library</a></div></details>
-      <noscript><p>JavaScript is needed for the assistant. You can still <a href="/laboratory/evidence">read the evidence library</a>.</p></noscript>
+      <p id="research-chat-scope" className="research-chat-scope">For research, not personal medical advice. Please leave out personal health details. Conversations clear when you reload. <Link href="/privacy">Privacy</Link></p>
+      <details className="research-chat-method"><summary>How answers are prepared</summary><p>{provider?provider+'. ':''}The assistant checks the topic, searches Europe PMC or reads your selected notes, then prepares an answer with source links. It reads abstracts and summaries, not full papers. Check important interpretations against the original source.</p><p>A small daily allowance keeps the public assistant available. People on the same network share this allowance.</p><div><Link href="/laboratory/ai-evaluation">Read the method</Link><Link href="/laboratory/evidence">Browse the evidence library</Link></div></details>
+      <noscript><p>JavaScript is needed for the assistant. You can still <Link href="/laboratory/evidence">read the evidence library</Link>.</p></noscript>
     </div>
     {last?.answer&&<aside className="research-chat-evidence" aria-label="Evidence for the latest answer">
       <div className="research-chat-evidence-heading"><h2>Sources</h2><span>{last.sources.length} considered</span></div><p>{last.retrieval?.mode==='literature'?`${last.retrieval.used} usable ${last.retrieval.used===1?'abstract':'abstracts'} from up to 12 search results.`:'Selected notes from the Atlas evidence library.'}</p>

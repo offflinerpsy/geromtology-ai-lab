@@ -76,6 +76,6 @@ export default function Header() {
       {groups.map(group => <details className="mobile-nav-group" key={group.href}><summary>{group.label}<span aria-hidden="true">+</span></summary><Link href={group.href} onClick={() => setOpen(false)}>{group.action}</Link>{group.links.map(([label, href]) => <Link key={href} href={href} aria-current={current(href) ? 'page' : undefined} onClick={() => setOpen(false)}>{label}</Link>)}</details>)}
       <Link className="mobile-evidence-link" href="/laboratory/evidence" onClick={() => setOpen(false)}>Evidence library</Link>
     </nav></SheetContent></Sheet>
-    <noscript><nav className="header-nojs" aria-label="Navigation without JavaScript"><a href="/tools/check-ins">Health check-ins</a><a href="/tools">Research tools</a><a href="/laboratory/evidence">Evidence</a><a href="/about">About</a><a href="/laboratory/ask">Ask AI</a></nav></noscript>
+    <noscript><nav className="header-nojs" aria-label="Navigation without JavaScript"><Link href="/tools/check-ins">Health check-ins</Link><Link href="/tools">Research tools</Link><Link href="/laboratory/evidence">Evidence</Link><Link href="/about">About</Link><Link href="/laboratory/ask">Ask AI</Link></nav></noscript>
   </header>;
 }
